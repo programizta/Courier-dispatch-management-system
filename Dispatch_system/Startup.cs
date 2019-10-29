@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Dispatch_system.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Dispatch_system.Models;
 
 namespace Dispatch_system
 {
@@ -37,7 +38,16 @@ namespace Dispatch_system
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+
+            // wywołanie jakiejkowiek metody z interfejsu IPersonRepository
+            // wyzwala metodę z klasy SQLEmployeeRepository
+            services.AddScoped<IPersonRepository, SQLPeopleRepository>();
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 2;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

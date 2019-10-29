@@ -1,0 +1,81 @@
+﻿@model  IEnumerable<EmployeeViewModel>
+
+<h1>Edycja pracownika</h1>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div id="ui">
+                <form enctype="multipart/form-data" asp-controller="Manager" asp-action="EditEmployee" class="form-group">
+                    <input hidden asp-for="@Model.First().EmployeeId" />
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Imię:</label>
+                            <input asp-for="First().FirstName" class="form-control" value="@Model.First().FirstName" />
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Nazwisko:</label>
+                            <input asp-for="First().LastName" class="form-control" value="@Model.First().LastName" />
+                        </div>
+                    </div>
+
+                    <label>Adres:</label>
+                    <input asp-for="First().Address" class="form-control" value="@Model.First().Address" />
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Miasto:</label>
+                            <input asp-for="First().City" class="form-control" value="@Model.First().City" />
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Kod pocztowy:</label>
+                            <input asp-for="First().PostalCode" class="form-control" value="@Model.First().PostalCode" />
+                        </div>
+                    </div>
+
+                    <label>Adres e-mail:</label>
+                    <input asp-for="First().Email" class="form-control" value="@Model.First().Email" />
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Numer telefonu:</label>
+                            <input asp-for="First().PhoneNumber" class="form-control" value="@Model.First().PhoneNumber" />
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div>
+                                <label>Stanowisko:</label>
+                            </div>
+
+                            <div class="btn-group">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" id="options">
+                                    <span asp-validation-for="First().Role" id="opt">@Model.First().Role</span> <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" id="1" href="#">Kierownik</a></li>
+                                    <li><a class="dropdown-item" id="2" href="#">Kurier</a></li>
+                                    <li><a class="dropdown-item" id="3" href="#">Spedytor</a></li>
+                                    <li><a class="dropdown-item" id="4" href="#">Magazynier</a></li>
+                                    <li><a class="dropdown-item" id="4" href="#">Pracownik oddziału</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="col-lg-pull-6">
+                        <br />
+                        <button type="submit" class="btn btn-primary btn-block">Zatwierdź zmiany</button>
+                        <a asp-controller="Manager" asp-action="AllEmployees" class="btn btn-danger btn-block">Wróć do strony poprzedniej</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

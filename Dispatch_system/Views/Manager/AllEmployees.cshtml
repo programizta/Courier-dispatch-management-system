@@ -1,0 +1,39 @@
+﻿@model List<EmployeeViewModel>
+
+@{
+    ViewBag.Title = "Pracownicy";
+}
+
+<h1>Pracownicy</h1>
+<h5>Lista pracowników w firmie wraz z ich zajmowanymi stanowiskami:</h5>
+
+<table class="table table-hover table-striped">
+    <thead class="thread-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Imię</th>
+            <th scope="col">Nazwisko</th>
+            <th scope="col">Numer telefonu</th>
+            <th scope="col">Stanowisko</th>
+            <th scope="col" class="text-right">Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <th scope="row">@employee.EmployeeId</th>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>@employee.PhoneNumber</td>
+                <td>
+                    @employee.Role
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-primary" asp-action="EditEmployee" asp-controller="Manager" asp-route-id="@employee.EmployeeId">Edycja</a>
+                    <button class="btn btn-danger">Usuń</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

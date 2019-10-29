@@ -1,9 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> signInManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Dispatch_system</title>
+    <title>@ViewData["Title"] - System kurierski</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,15 +28,103 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Dispatch_system</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">System kurierski</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Kierownik"))
+                    {
+                        // zaimplementuj kontroler i widok
+                        //<li><a asp-controller="manage" asp-action="managerPanel">Panel kierowniczy</a></li>
+                        <li><a asp-controller="manager" asp-action="allemployees">Pracownicy</a></li>
+                    }
+
+                    @if (!signInManager.IsSignedIn(User))
+                    {
+                        <li><a asp-controller="account" asp-action="login">Nadaj przesyłkę</a></li>
+                    }
+                    else
+                    {
+                        // zaimplementuj kontroler i widok
+                        <li><a asp-controller="broadcast" asp-action="createParcel">Nadaj przesyłkę</a></li>
+                    }
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Klient"))
+                    {
+                        // zaimplementuj kontroler i widok
+                        <li><a asp-controller="parcel" asp-action="checkStatus">Sprawdź status przesyłki</a></li>
+                    }
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Pracownik oddziału"))
+                    {
+                        // zaimplementuj kontroler i widok
+                        <li><a asp-controller="parcel" asp-action="checkStatus">Zarejestruj przesyłkę</a></li>
+                        <li><a asp-controller="parcel" asp-action="checkStatus">Znajdź przesyłkę</a></li>
+                    }
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Kurier"))
+                    {
+                        // zaimplementuj kontroler i widok
+                        <li><a asp-controller="parcel" asp-action="checkStatus">Panel kuriera</a></li>
+                    }
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Spedytor"))
+                    {
+                        // zaimplementuj kontroler i widok
+                        <li><a asp-controller="parcel" asp-action="checkStatus">Panel spedytora</a></li>
+                    }
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Magazynier"))
+                    {
+                        // zaimplementuj kontroler i widok
+                        <li><a asp-controller="parcel" asp-action="checkStatus">Przesyłki w magazynie</a></li>
+                    }
+
+                    @if (!signInManager.IsSignedIn(User) || (signInManager.IsSignedIn(User) && User.IsInRole("Klient")))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Informacje
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="Home" asp-action="About">O firmie</a></li>
+                                <li><a asp-controller="Home" asp-action="About">Oferta</a></li>
+                                <li><a asp-controller="Home" asp-action="About">Adresy</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Pomoc
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="Home" asp-action="About">Kontakt</a></li>
+                            </ul>
+                        </li>
+                    }
+                    <li><a asp-controller="Home" asp-action="About">O aplikacji</a></li>
                 </ul>
-                <partial name="_LoginPartial" />
+
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <div class="">
+                        <form asp-action="logout" asp-controller="account">
+                            <button type="submit" class="navbar-right navbar-link btn btn-link">
+                                Wyloguj @User.Identity.Name
+                            </button>
+                        </form>
+                    </div>
+                }
+
+                @if (!signInManager.IsSignedIn(User))
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a asp-controller="account" asp-action="register" class="navbar-link"><span class="glyphicon glyphicon-user"></span> Rejestracja</a></li>
+                        <li><a asp-controller="account" asp-action="login" class="navbar-link"><span class="glyphicon glyphicon-log-in"></span> Logowanie</a></li>
+                    </ul>
+                }
             </div>
         </div>
     </nav>
@@ -45,7 +135,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2019 - Dispatch_system</p>
+            <p>&copy; System kurierski</p>
         </footer>
     </div>
 

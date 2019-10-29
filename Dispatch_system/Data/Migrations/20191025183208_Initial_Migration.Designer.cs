@@ -4,14 +4,16 @@ using Dispatch_system.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dispatch_system.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191025183208_Initial_Migration")]
+    partial class Initial_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,27 +154,19 @@ namespace Dispatch_system.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .IsRequired();
-
-                    b.Property<string>("City")
-                        .IsRequired();
-
                     b.Property<string>("FirstName")
                         .IsRequired();
 
                     b.Property<string>("LastName")
                         .IsRequired();
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired();
+                    b.Property<int>("PhoneNumber");
 
-                    b.Property<string>("PostalCode")
-                        .IsRequired();
-
-                    b.Property<string>("UserId");
+                    b.Property<int?>("RoleIdDatabaseRoleId");
 
                     b.HasKey("PersonId");
+
+                    b.HasIndex("RoleIdDatabaseRoleId");
 
                     b.ToTable("People");
                 });
@@ -367,6 +361,13 @@ namespace Dispatch_system.Data.Migrations
                         .WithMany()
                         .HasForeignKey("StatusIdParcelStatusId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Dispatch_system.Models.Person", b =>
+                {
+                    b.HasOne("Dispatch_system.Models.DatabaseRole", "RoleId")
+                        .WithMany()
+                        .HasForeignKey("RoleIdDatabaseRoleId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
