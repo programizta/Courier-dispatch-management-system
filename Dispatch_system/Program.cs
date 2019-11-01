@@ -32,8 +32,6 @@ namespace Dispatch_system
                 // niż rola "Klient"
                 var managerRole = new IdentityRole("Kierownik");
                 var courierRole = new IdentityRole("Kurier");
-                var forwarderRole = new IdentityRole("Spedytor");
-                var warehousemanRole = new IdentityRole("Magazynier");
                 var branchEmployeeRole = new IdentityRole("Pracownik oddziału");
                 var clientRole = new IdentityRole("Klient");
 
@@ -41,8 +39,6 @@ namespace Dispatch_system
                 {
                     roleMgr.CreateAsync(managerRole).GetAwaiter().GetResult();
                     roleMgr.CreateAsync(courierRole).GetAwaiter().GetResult();
-                    roleMgr.CreateAsync(forwarderRole).GetAwaiter().GetResult();
-                    roleMgr.CreateAsync(warehousemanRole).GetAwaiter().GetResult();
                     roleMgr.CreateAsync(branchEmployeeRole).GetAwaiter().GetResult();
                     roleMgr.CreateAsync(clientRole).GetAwaiter().GetResult();
                 }
@@ -63,18 +59,6 @@ namespace Dispatch_system
                         Email = "kurier@poczta.pl"
                     };
 
-                    var forwarderUser = new IdentityUser
-                    {
-                        UserName = "spedytor@poczta.pl",
-                        Email = "spedytor@poczta.pl"
-                    };
-
-                    var warehousemanUser = new IdentityUser
-                    {
-                        UserName = "magazynier@poczta.pl",
-                        Email = "magazynier@poczta.pl"
-                    };
-
                     var branchEmployeeUser = new IdentityUser
                     {
                         UserName = "pracownik_oddzialu@poczta.pl",
@@ -92,12 +76,6 @@ namespace Dispatch_system
 
                     var resultCourier = userMgr.CreateAsync(courierUser, password).GetAwaiter().GetResult();
                     userMgr.AddToRoleAsync(courierUser, courierRole.Name).GetAwaiter().GetResult();
-
-                    var resultForwarder = userMgr.CreateAsync(forwarderUser, password).GetAwaiter().GetResult();
-                    userMgr.AddToRoleAsync(forwarderUser, forwarderRole.Name).GetAwaiter().GetResult();
-
-                    var resultWarehouseman = userMgr.CreateAsync(warehousemanUser, password).GetAwaiter().GetResult();
-                    userMgr.AddToRoleAsync(warehousemanUser, warehousemanRole.Name).GetAwaiter().GetResult();
 
                     var resultBranchEmployee = userMgr.CreateAsync(branchEmployeeUser, password).GetAwaiter().GetResult();
                     userMgr.AddToRoleAsync(branchEmployeeUser, branchEmployeeRole.Name).GetAwaiter().GetResult();

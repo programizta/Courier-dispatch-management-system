@@ -1,6 +1,7 @@
 ﻿@model EmployeeViewModel
 
-<h1>Edycja pracownika</h1>
+<h1>Tworzenie profilu nowego pracownika</h1>
+<h5>Proszę wypełnić poniższe pola dla utworzenia nowego pracownika w systemie</h5>
 
 <div class="container">
 
@@ -9,42 +10,40 @@
         <div class="col-lg-3"></div>
         <div class="col-lg-6">
             <div id="ui">
-                <form enctype="multipart/form-data" asp-controller="Manager" asp-action="EditEmployee" class="form-group">
+                <form enctype="multipart/form-data" asp-controller="Manager" asp-action="CreateEmployee" class="form-group">
                     <input hidden asp-for="@Model.UserId" />
                     <input hidden asp-for="@Model.EmployeeId" />
-                    <input hidden asp-for="@Model.BranchName" />
-                    <input hidden asp-for="@Model.Email" />
                     <div class="row">
                         <div class="col-lg-6">
                             <label>Imię:</label>
-                            <input asp-for="FirstName" class="form-control" value="@Model.FirstName" />
+                            <input asp-for="FirstName" class="form-control" />
                         </div>
 
                         <div class="col-lg-6">
                             <label>Nazwisko:</label>
-                            <input asp-for="LastName" class="form-control" value="@Model.LastName" />
+                            <input asp-for="LastName" class="form-control" />
                         </div>
                     </div>
 
                     <label>Adres:</label>
-                    <input asp-for="Address" class="form-control" value="@Model.Address" />
+                    <input asp-for="Address" class="form-control" />
 
                     <div class="row">
                         <div class="col-lg-6">
                             <label>Miasto:</label>
-                            <input asp-for="City" class="form-control" value="@Model.City" />
+                            <input asp-for="City" class="form-control" />
                         </div>
 
                         <div class="col-lg-6">
                             <label>Kod pocztowy:</label>
-                            <input asp-for="PostalCode" class="form-control" value="@Model.PostalCode" />
+                            <input asp-for="PostalCode" class="form-control" />
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
                             <label>Numer telefonu:</label>
-                            <input asp-for="PhoneNumber" class="form-control" value="@Model.PhoneNumber" />
+                            <input asp-for="PhoneNumber" class="form-control" />
                         </div>
 
                         <div class="col-lg-6">
@@ -55,36 +54,35 @@
                             <div>
                                 @{
                                     @Html.DropDownListFor(x => x.Role, new List<SelectListItem> {
-                                   new SelectListItem { Text = "Klient", Value = "Klient", },
                                new SelectListItem { Text = "Kierownik", Value = "Kierownik", },
                                new SelectListItem { Text = "Kurier", Value = "Kurier", },
                                new SelectListItem { Text = "Pracownik oddziału", Value = "Pracownik oddziału" }}, new { id="role", @class="form-control" })
                                 }
                             </div>
-                        </div>
 
-                        <div>
-                            <label>Oddział pracownika:</label>
-                        </div>
+                            <div>
+                                <label>Oddział pracownika:</label>
+                            </div>
 
-                        <div>
-                            @{
-                                @Html.DropDownListFor(x => x.BranchName, new List<SelectListItem> {
-                               new SelectListItem { Text = "Oddział Rzeszów", Value = "Oddział Rzeszów", },
-                           new SelectListItem { Text = "Oddział Brzozów", Value = "Oddział Brzozów", },
-                           new SelectListItem { Text = "Oddział Przemyśl", Value = "Oddział Przemyśl", },
-                           new SelectListItem { Text = "Oddział Dębica", Value = "Oddział Dębica", },
-                           new SelectListItem { Text = "Oddział Krosno", Value = "Oddział Krosno" }}, new { id="branchname", @class="form-control" })
-                            }
+                            <div>
+                                @{
+                                    @Html.DropDownListFor(x => x.BranchName, new List<SelectListItem> {
+                                   new SelectListItem { Text = "", Value = "", },
+                                   new SelectListItem { Text = "Oddział Rzeszów", Value = "Oddział Rzeszów", },
+                               new SelectListItem { Text = "Oddział Brzozów", Value = "Oddział Brzozów", },
+                               new SelectListItem { Text = "Oddział Przemyśl", Value = "Oddział Przemyśl", },
+                               new SelectListItem { Text = "Oddział Dębica", Value = "Oddział Dębica", },
+                               new SelectListItem { Text = "Oddział Krosno", Value = "Oddział Krosno" }}, new { id="branchname", @class="form-control" })
+                                }
+                            </div>
                         </div>
-
                     </div>
 
                     <div asp-validation-summary="All" class="text-danger"></div>
 
                     <div class="col-lg-pull-6">
                         <br />
-                        <button type="submit" class="btn btn-primary btn-block">Zatwierdź zmiany</button>
+                        <button type="submit" class="btn btn-primary btn-block">Utwórz pracownika</button>
                         <a asp-controller="Manager" asp-action="AllEmployees" class="btn btn-danger btn-block">Wróć do strony poprzedniej</a>
                     </div>
                 </form>

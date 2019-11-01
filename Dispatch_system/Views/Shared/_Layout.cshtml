@@ -69,18 +69,6 @@
                         <li><a asp-controller="parcel" asp-action="checkStatus">Panel kuriera</a></li>
                     }
 
-                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Spedytor"))
-                    {
-                        // zaimplementuj kontroler i widok
-                        <li><a asp-controller="parcel" asp-action="checkStatus">Panel spedytora</a></li>
-                    }
-
-                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Magazynier"))
-                    {
-                        // zaimplementuj kontroler i widok
-                        <li><a asp-controller="parcel" asp-action="checkStatus">Przesyłki w magazynie</a></li>
-                    }
-
                     @if (!signInManager.IsSignedIn(User) || (signInManager.IsSignedIn(User) && User.IsInRole("Klient")))
                     {
                         <li class="dropdown">

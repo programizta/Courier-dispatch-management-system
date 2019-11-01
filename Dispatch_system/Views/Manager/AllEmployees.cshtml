@@ -23,6 +23,7 @@
         {
             <tr>
                 <th scope="row">@employee.EmployeeId</th>
+                <td hidden>@employee.UserId</td>
                 <td>@employee.FirstName</td>
                 <td>@employee.LastName</td>
                 <td>@employee.PhoneNumber</td>
@@ -30,8 +31,12 @@
                     @employee.Role
                 </td>
                 <td class="text-right">
-                    <a class="btn btn-primary" asp-action="EditEmployee" asp-controller="Manager" asp-route-id="@employee.EmployeeId">Edycja</a>
-                    <button class="btn btn-danger">Usuń</button>
+                    <form asp-action="DeleteEmployee" asp-controller="Manager" asp-route-id="@employee.PersonId" method="post">
+                        <button class="btn btn-danger" type="submit">Usuń</button>
+                    </form>
+                    <form asp-action="EditEmployee" asp-controller="Manager" asp-route-id="@employee.PersonId" method="get">
+                        <button class="btn btn-primary" type="submit">Edycja</button>
+                    </form>
                 </td>
             </tr>
         }

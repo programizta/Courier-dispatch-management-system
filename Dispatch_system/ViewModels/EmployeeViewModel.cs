@@ -9,8 +9,14 @@ namespace Dispatch_system.ViewModels
 {
     public class EmployeeViewModel
     {
-        [Display(Name = "Id")]
+        [Display(Name = "Id osoby")]
+        public int PersonId { get; set; }
+
+        [Display(Name = "Id pracownika")]
         public int EmployeeId { get; set; }
+
+        [Display(Name = "Nazwa oddziału")]
+        public string BranchName { get; set; }
 
         [Display(Name = "Imię")]
         public string FirstName { get; set; }

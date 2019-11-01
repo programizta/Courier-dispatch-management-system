@@ -8,9 +8,9 @@ namespace Dispatch_system.Models
 {
     public interface IPersonRepository
     {
-        IEnumerable<EmployeeViewModel> GetEmployee(int id);
+        EmployeeViewModel GetEmployee(int id);
         List<EmployeeViewModel> GetAllEmployees();
-        void UpdateEmployee(EmployeeViewModel personChanges);
+        void UpdateEmployee(Person personChanges, EmployeeViewModel employeeChanges);
         void DeleteEmployee(int id);
     }
 }

@@ -29,7 +29,9 @@ namespace Dispatch_system.Models
         [Required]
         public string PhoneNumber { get; set; }
 
-
+        [Required]
         public string UserId { get; set; }
+
+        public int EmployeeId { get; set; }
     }
 }

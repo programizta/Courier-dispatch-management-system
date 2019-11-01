@@ -18,10 +18,16 @@ namespace Dispatch_system.Models
         public int SenderPostalCode { get; set; }
 
         [Required]
+        public string SenderCity { get; set; }
+
+        [Required]
         public string ReceiverAddress { get; set; }
 
         [Required]
         public int ReceiverPostalCode { get; set; }
+
+        [Required]
+        public string ReceiverCity { get; set; }
 
         [Required]
         public decimal Value { get; set; }
@@ -41,10 +47,8 @@ namespace Dispatch_system.Models
 
         public short DeliveryAttempts { get; set; }
 
+        public Employee EmployeeId { get; set; }
 
-        public bool Delivered { get; set; }
-
-
-        public Person PersonId { get; set; }
+        public Branch BranchId { get; set; }
     }
 }

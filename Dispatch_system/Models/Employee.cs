@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace Dispatch_system.Models
 {
-    /// <summary>
-    /// ta klasa się raczej nie przyda
-    /// </summary>
-    public class DatabaseRole
+    public class Employee
     {
         [Required]
-        public int DatabaseRoleId { get; set; }
+        public int EmployeeId { get; set; }
 
         [Required]
-        public string RoleName { get; set; }
+        public int BranchId { get; set; }
     }
 }

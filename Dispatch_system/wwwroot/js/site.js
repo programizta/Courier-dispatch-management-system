@@ -23,4 +23,8 @@ $(document).ready(function () {
     $('#4').click(function () {
         setText('#4');
     });
+
+    $('#5').click(function () {
+        setText('#5');
+    });
 });

@@ -4,14 +4,16 @@ using Dispatch_system.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dispatch_system.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191101150029_rebuild-database")]
+    partial class rebuilddatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,6 @@ namespace Dispatch_system.Data.Migrations
 
                     b.Property<short>("BranchCode");
 
-                    b.Property<string>("BranchName")
-                        .IsRequired();
-
                     b.Property<string>("City")
                         .IsRequired();
 
@@ -50,9 +49,11 @@ namespace Dispatch_system.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BranchId");
+                    b.Property<int>("BranchId1");
 
                     b.HasKey("EmployeeId");
+
+                    b.HasIndex("BranchId1");
 
                     b.ToTable("Employees");
                 });
@@ -131,8 +132,6 @@ namespace Dispatch_system.Data.Migrations
 
                     b.Property<string>("City")
                         .IsRequired();
-
-                    b.Property<int>("EmployeeId");
 
                     b.Property<string>("FirstName")
                         .IsRequired();
@@ -313,6 +312,14 @@ namespace Dispatch_system.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Dispatch_system.Models.Employee", b =>
+                {
+                    b.HasOne("Dispatch_system.Models.Branch", "BranchId")
+                        .WithMany()
+                        .HasForeignKey("BranchId1")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Dispatch_system.Models.Parcel", b =>
