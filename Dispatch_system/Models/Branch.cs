@@ -9,7 +9,7 @@ namespace Dispatch_system.Models
     public class Branch
     {
         [Required]
-        public int BranchId { get; set; }
+        public short BranchId { get; set; }
 
         [Required]
         public string BranchName { get; set; }

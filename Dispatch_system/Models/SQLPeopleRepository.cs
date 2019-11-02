@@ -68,11 +68,10 @@ namespace Dispatch_system.Models
                          join user in context.Users on person.UserId equals user.Id
                          join userRole in context.UserRoles on user.Id equals userRole.UserId
                          join role in context.Roles on userRole.RoleId equals role.Id
-                         //where role.Name != "Klient"
                          select new EmployeeViewModel
                          {
                              PersonId = person.PersonId,
-                             EmployeeId = person.EmployeeId,
+                             EmployeeId = (int)person.EmployeeId,
                              BranchName = branch.BranchName,
                              UserId = person.UserId,
                              FirstName = person.FirstName,
@@ -108,7 +107,7 @@ namespace Dispatch_system.Models
             }
 
             // wydobycie nowego ID oddziału w przypadku jej zmiany
-            int newBranchId = context.Branches.FirstOrDefault(x => x.BranchName == employeeChanges.BranchName).BranchId;
+            short newBranchId = context.Branches.FirstOrDefault(x => x.BranchName == employeeChanges.BranchName).BranchId;
             // wydobycie wpisu pracownika dla aktualizacji oddziału, do którego jest przypisany
             var employee = context.Employees.FirstOrDefault(x => x.EmployeeId == personToUpdate.EmployeeId);
 

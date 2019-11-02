@@ -64,7 +64,7 @@ namespace Dispatch_system.Controllers
                                     .Users.FirstOrDefault(u => u.Email == model.Email)
                                     .Id;
 
-                int branchId = dbContext.Branches.FirstOrDefault(x => x.BranchName == model.BranchName).BranchId;
+                short branchId = dbContext.Branches.FirstOrDefault(x => x.BranchName == model.BranchName).BranchId;
 
                 Employee employee = new Employee
                 {
@@ -120,14 +120,6 @@ namespace Dispatch_system.Controllers
         [HttpPost]
         public ActionResult DeleteEmployee(int id)
         {
-            /*Person person = dbContext.People.FirstOrDefault(x => x.PersonId == id);
-            dbContext.Remove(person);
-            dbContext.SaveChanges();
-
-            var user = dbContext.Users.FirstOrDefault(x => x.Id == person.UserId);
-
-            dbContext.Users.Remove(user);
-            dbContext.SaveChanges();*/
             personRepository.DeleteEmployee(id);
 
             return RedirectToAction("AllEmployees", "Manager");

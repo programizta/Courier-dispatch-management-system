@@ -38,17 +38,15 @@ namespace Dispatch_system.Models
         [Required]
         public decimal Volume { get; set; }
 
+        public int? Insurance { get; set; }
 
-        public int Insurance { get; set; }
-
-
-        public ParcelStatus StatusId { get; set; }
-
+        [Required]
+        public short StatusId { get; set; }
 
         public short DeliveryAttempts { get; set; }
 
-        public Employee EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
 
-        public Branch BranchId { get; set; }
+        public short BranchId { get; set; }
     }
 }

@@ -32,6 +32,6 @@ namespace Dispatch_system.Models
         [Required]
         public string UserId { get; set; }
 
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
     }
 }

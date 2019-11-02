@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dispatch_system.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191101200659_recreating-database")]
-    partial class recreatingdatabase
+    [Migration("20191102123614_repairing-database")]
+    partial class repairingdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace Dispatch_system.Data.Migrations
 
             modelBuilder.Entity("Dispatch_system.Models.Branch", b =>
                 {
-                    b.Property<int>("BranchId")
+                    b.Property<short>("BranchId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -65,13 +65,13 @@ namespace Dispatch_system.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BranchId1");
+                    b.Property<short>("BranchId");
 
                     b.Property<short>("DeliveryAttempts");
 
-                    b.Property<int?>("EmployeeId1");
+                    b.Property<int>("EmployeeId");
 
-                    b.Property<int>("Insurance");
+                    b.Property<int?>("Insurance");
 
                     b.Property<string>("ReceiverAddress")
                         .IsRequired();
@@ -89,7 +89,7 @@ namespace Dispatch_system.Data.Migrations
 
                     b.Property<int>("SenderPostalCode");
 
-                    b.Property<int?>("StatusIdParcelStatusId");
+                    b.Property<short>("StatusId");
 
                     b.Property<decimal>("Value");
 
@@ -99,18 +99,12 @@ namespace Dispatch_system.Data.Migrations
 
                     b.HasKey("ParcelId");
 
-                    b.HasIndex("BranchId1");
-
-                    b.HasIndex("EmployeeId1");
-
-                    b.HasIndex("StatusIdParcelStatusId");
-
                     b.ToTable("Parcels");
                 });
 
             modelBuilder.Entity("Dispatch_system.Models.ParcelStatus", b =>
                 {
-                    b.Property<int>("ParcelStatusId")
+                    b.Property<short>("ParcelStatusId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -134,7 +128,7 @@ namespace Dispatch_system.Data.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<int?>("EmployeeId");
 
                     b.Property<string>("FirstName")
                         .IsRequired();
@@ -315,21 +309,6 @@ namespace Dispatch_system.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Dispatch_system.Models.Parcel", b =>
-                {
-                    b.HasOne("Dispatch_system.Models.Branch", "BranchId")
-                        .WithMany()
-                        .HasForeignKey("BranchId1");
-
-                    b.HasOne("Dispatch_system.Models.Employee", "EmployeeId")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId1");
-
-                    b.HasOne("Dispatch_system.Models.ParcelStatus", "StatusId")
-                        .WithMany()
-                        .HasForeignKey("StatusIdParcelStatusId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

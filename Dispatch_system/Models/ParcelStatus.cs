@@ -9,7 +9,7 @@ namespace Dispatch_system.Models
     public class ParcelStatus
     {
         [Required]
-        public int ParcelStatusId { get; set; }
+        public short ParcelStatusId { get; set; }
 
         [Required]
         public string StatusName { get; set; }
