@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Dispatch_system.Models
 {
-    public class SQLPeopleRepository : IPersonRepository
+    public class SQLEmployeeService : IEmployeeSerivce
     {
         private readonly ApplicationDbContext context;
 
-        public SQLPeopleRepository(ApplicationDbContext context)
+        public SQLEmployeeService(ApplicationDbContext context)
         {
             this.context = context;
         }

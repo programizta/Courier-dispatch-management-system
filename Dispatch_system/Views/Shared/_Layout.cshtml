@@ -40,15 +40,7 @@
                         <li><a asp-controller="manager" asp-action="allemployees">Pracownicy</a></li>
                     }
 
-                    @if (!signInManager.IsSignedIn(User))
-                    {
-                        <li><a asp-controller="account" asp-action="login">Nadaj przesyłkę</a></li>
-                    }
-                    else
-                    {
-                        // zaimplementuj kontroler i widok
-                        <li><a asp-controller="broadcast" asp-action="createParcel">Nadaj przesyłkę</a></li>
-                    }
+                    <li><a asp-controller="broadcast" asp-action="createParcel">Nadaj przesyłkę online</a></li>
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Klient"))
                     {

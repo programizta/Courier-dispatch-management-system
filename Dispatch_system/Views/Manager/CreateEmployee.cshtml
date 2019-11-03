@@ -59,23 +59,23 @@
                                new SelectListItem { Text = "Pracownik oddziału", Value = "Pracownik oddziału" }}, new { id="role", @class="form-control" })
                                 }
                             </div>
-
-                            <div>
-                                <label>Oddział pracownika:</label>
-                            </div>
-
-                            <div>
-                                @{
-                                    @Html.DropDownListFor(x => x.BranchName, new List<SelectListItem> {
-                                   new SelectListItem { Text = "", Value = "", },
-                                   new SelectListItem { Text = "Oddział Rzeszów", Value = "Oddział Rzeszów", },
-                               new SelectListItem { Text = "Oddział Brzozów", Value = "Oddział Brzozów", },
-                               new SelectListItem { Text = "Oddział Przemyśl", Value = "Oddział Przemyśl", },
-                               new SelectListItem { Text = "Oddział Dębica", Value = "Oddział Dębica", },
-                               new SelectListItem { Text = "Oddział Krosno", Value = "Oddział Krosno" }}, new { id="branchname", @class="form-control" })
-                                }
-                            </div>
                         </div>
+                    </div>
+
+                    <div>
+                        <label>Oddział pracownika:</label>
+                    </div>
+
+                    <div>
+                        @{
+                            @Html.DropDownListFor(x => x.BranchName, new List<SelectListItem> {
+                           new SelectListItem { Text = "", Value = "", },
+                           new SelectListItem { Text = "Oddział Rzeszów", Value = "Oddział Rzeszów", },
+                       new SelectListItem { Text = "Oddział Brzozów", Value = "Oddział Brzozów", },
+                       new SelectListItem { Text = "Oddział Przemyśl", Value = "Oddział Przemyśl", },
+                       new SelectListItem { Text = "Oddział Dębica", Value = "Oddział Dębica", },
+                       new SelectListItem { Text = "Oddział Krosno", Value = "Oddział Krosno" }}, new { id="branchname", @class="form-control" })
+                        }
                     </div>
 
                     <div asp-validation-summary="All" class="text-danger"></div>

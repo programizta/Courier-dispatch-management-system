@@ -11,25 +11,7 @@ namespace Dispatch_system.Models
         [Required]
         public int ParcelId { get; set; }
 
-        [Required]
-        public string SenderAddress { get; set; }
-
-        [Required]
-        public int SenderPostalCode { get; set; }
-
-        [Required]
-        public string SenderCity { get; set; }
-
-        [Required]
-        public string ReceiverAddress { get; set; }
-
-        [Required]
-        public int ReceiverPostalCode { get; set; }
-
-        [Required]
-        public string ReceiverCity { get; set; }
-
-        [Required]
+        //[Required] - powiedzmy, że koszt przesyłki określi pracownik nadawczy
         public decimal Value { get; set; }
 
         [Required]
@@ -40,13 +22,19 @@ namespace Dispatch_system.Models
 
         public int? Insurance { get; set; }
 
-        [Required]
         public short StatusId { get; set; }
 
         public short DeliveryAttempts { get; set; }
 
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
 
+        [Required]
         public short BranchId { get; set; }
+
+        [Required]
+        public bool IsSent { get; set; }
+
+        [Required]
+        public int ParcelAddressesId { get; set; }
     }
 }

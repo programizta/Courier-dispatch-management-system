@@ -13,26 +13,26 @@ namespace Dispatch_system.Controllers
     public class ManagerController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
-        private readonly IPersonRepository personRepository;
-        private readonly ApplicationDbContext dbContext;
+        private readonly IEmployeeSerivce employeeRepository;
+        private readonly ApplicationDbContext context;
 
-        public ManagerController(IPersonRepository personRepository, ApplicationDbContext dbContext, UserManager<IdentityUser> userManager)
+        public ManagerController(IEmployeeSerivce employeeRepository, ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
-            this.personRepository = personRepository;
-            this.dbContext = dbContext;
+            this.employeeRepository = employeeRepository;
+            this.context = context;
             this.userManager = userManager;
         }
 
         public IActionResult AllEmployees()
         {
-            var employees = personRepository.GetAllEmployees();
+            var employees = employeeRepository.GetAllEmployees();
             return View(employees);
         }
 
         [HttpGet]
         public IActionResult EditEmployee(int id)
         {
-            var model = personRepository.GetEmployee(id);
+            var model = employeeRepository.GetEmployee(id);
             return View(model);
         }
 
@@ -64,15 +64,15 @@ namespace Dispatch_system.Controllers
                                     .Users.FirstOrDefault(u => u.Email == model.Email)
                                     .Id;
 
-                short branchId = dbContext.Branches.FirstOrDefault(x => x.BranchName == model.BranchName).BranchId;
+                short branchId = context.Branches.FirstOrDefault(x => x.BranchName == model.BranchName).BranchId;
 
                 Employee employee = new Employee
                 {
                     BranchId = branchId
                 };
 
-                dbContext.Add(employee);
-                dbContext.SaveChanges();
+                context.Add(employee);
+                context.SaveChanges();
 
                 Person newPerson = new Person
                 {
@@ -86,8 +86,8 @@ namespace Dispatch_system.Controllers
                     EmployeeId = employee.EmployeeId
                 };
 
-                dbContext.Add(newPerson);
-                dbContext.SaveChanges();
+                context.Add(newPerson);
+                context.SaveChanges();
 
             }
 
@@ -99,7 +99,7 @@ namespace Dispatch_system.Controllers
         {
             if (ModelState.IsValid)
             {
-                var employee = personRepository.GetEmployee(model.EmployeeId);
+                var employee = employeeRepository.GetEmployee(model.EmployeeId);
 
                 Person person = new Person
                 {
@@ -111,7 +111,7 @@ namespace Dispatch_system.Controllers
                     PhoneNumber = model.PhoneNumber
                 };
 
-                personRepository.UpdateEmployee(person, model);
+                employeeRepository.UpdateEmployee(person, model);
             }
 
             return RedirectToAction("AllEmployees", "Manager");
@@ -120,7 +120,7 @@ namespace Dispatch_system.Controllers
         [HttpPost]
         public ActionResult DeleteEmployee(int id)
         {
-            personRepository.DeleteEmployee(id);
+            employeeRepository.DeleteEmployee(id);
 
             return RedirectToAction("AllEmployees", "Manager");
         }

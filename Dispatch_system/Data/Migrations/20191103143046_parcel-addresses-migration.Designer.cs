@@ -4,14 +4,16 @@ using Dispatch_system.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dispatch_system.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191103143046_parcel-addresses-migration")]
+    partial class parceladdressesmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,8 +102,7 @@ namespace Dispatch_system.Data.Migrations
                     b.Property<string>("ReceiverCity")
                         .IsRequired();
 
-                    b.Property<string>("ReceiverPostalCode")
-                        .IsRequired();
+                    b.Property<int>("ReceiverPostalCode");
 
                     b.Property<string>("SenderAddress")
                         .IsRequired();
@@ -109,8 +110,7 @@ namespace Dispatch_system.Data.Migrations
                     b.Property<string>("SenderCity")
                         .IsRequired();
 
-                    b.Property<string>("SenderPostalCode")
-                        .IsRequired();
+                    b.Property<int>("SenderPostalCode");
 
                     b.HasKey("ParcelAddressesId");
 

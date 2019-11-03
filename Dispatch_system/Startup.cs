@@ -13,6 +13,7 @@ using Dispatch_system.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Dispatch_system.Models;
+using Dispatch_system.Services;
 
 namespace Dispatch_system
 {
@@ -39,9 +40,13 @@ namespace Dispatch_system
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            // wywołanie jakiejkowiek metody z interfejsu IPersonRepository
-            // wyzwala metodę z klasy SQLEmployeeRepository
-            services.AddScoped<IPersonRepository, SQLPeopleRepository>();
+            // wywołanie jakiejkowiek metody z interfejsu IEmployeeService
+            // wyzwala metodę z klasy SQLEmployeeService
+            services.AddScoped<IEmployeeSerivce, SQLEmployeeService>();
+
+            // wywołanie jakiejkowiek metody z interfejsu IClientParcelService
+            // wyzwala metodę z klasy SQLClientParcelService
+            services.AddScoped<IClientParcelService, SQLClientParcelService>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {

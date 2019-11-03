@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dispatch_system.Models
 {
-    public interface IPersonRepository
+    public interface IEmployeeSerivce
     {
         EmployeeViewModel GetEmployee(int id);
         List<EmployeeViewModel> GetAllEmployees();
