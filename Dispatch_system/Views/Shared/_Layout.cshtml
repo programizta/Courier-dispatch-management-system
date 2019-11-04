@@ -37,10 +37,10 @@
                     {
                         // zaimplementuj kontroler i widok
                         //<li><a asp-controller="manage" asp-action="managerPanel">Panel kierowniczy</a></li>
-                        <li><a asp-controller="manager" asp-action="allemployees">Pracownicy</a></li>
+                        <li><a asp-controller="Manager" asp-action="AllEmployees">Pracownicy</a></li>
                     }
 
-                    <li><a asp-controller="broadcast" asp-action="createParcel">Nadaj przesyłkę online</a></li>
+                    <li><a asp-controller="ClientParcel" asp-action="PostParcel">Nadaj przesyłkę online</a></li>
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Klient"))
                     {

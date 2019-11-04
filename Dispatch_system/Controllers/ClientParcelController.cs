@@ -33,8 +33,33 @@ namespace Dispatch_system.Controllers
         public IActionResult PostParcel(ClientParcelViewModel clientParcelViewModel)
         {
             clientParcelService.ParcelPost(clientParcelViewModel);
+            int senderBranchCode = int.Parse(new string(clientParcelViewModel.SenderPostalCode.Take(2).ToArray()));
 
-            return RedirectToAction("Index", "Home");
+            var queryModel = (from branches in context.Branches
+                          join parcels in context.Parcels on branches.BranchId equals parcels.SenderBranchId
+                          where branches.BranchCode == senderBranchCode
+                          select new BranchDataViewModel
+                          {
+                              BranchName = branches.BranchName,
+                              BranchAddress = branches.BranchAddress,
+                              BranchCity = branches.City
+                          }
+                );
+
+            BranchDataViewModel model = new BranchDataViewModel
+            {
+                BranchName = queryModel.First().BranchName,
+                BranchAddress = queryModel.First().BranchAddress,
+                BranchCity = queryModel.First().BranchCity
+            };
+
+            return RedirectToAction("ThanksPage", "ClientParcel", model);
+        }
+
+        [HttpGet]
+        public IActionResult ThanksPage(BranchDataViewModel model)
+        {
+            return View(model);
         }
     }
 }

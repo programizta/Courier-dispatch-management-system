@@ -8,8 +8,14 @@ namespace Dispatch_system.ViewModels
 {
     public class ClientParcelViewModel
     {
-        [Display(Name = "Adres nadawcy")]
-        public string SenderAddress { get; set; }
+        [Display(Name = "Nazwa ulicy nadawcy")]
+        public string SenderStreetName { get; set; }
+
+        [Display(Name = "Numer bloku nadawcy")]
+        public int SenderBlockNumber { get; set; }
+
+        [Display(Name = "Numer mieszkania nadawcy")]
+        public int SenderFlatNumber { get; set; }
 
         [Display(Name = "Kod pocztowy nadawcy")]
         public string SenderPostalCode { get; set; }
@@ -17,8 +23,14 @@ namespace Dispatch_system.ViewModels
         [Display(Name = "Miasto nadawcy")]
         public string SenderCity { get; set; }
 
-        [Display(Name = "Adres odbiorcy")]
-        public string ReceiverAddress { get; set; }
+        [Display(Name = "Nazwa ulicy odbiorcy")]
+        public string ReceiverStreetName { get; set; }
+
+        [Display(Name = "Numer bloku odbiorcy")]
+        public int ReceiverBlockNumber { get; set; }
+
+        [Display(Name = "Numer mieszkania odbiorcy")]
+        public int ReceiverFlatNumber { get; set; }
 
         [Display(Name = "Kod pocztowy odbiorcy")]
         public string ReceiverPostalCode { get; set; }
@@ -42,7 +54,10 @@ namespace Dispatch_system.ViewModels
         public int? Insurrance { get; set; }
 
         [Display(Name = "Id oddziału wysyłającego")]
-        public short BranchId { get; set; }
+        public short SenderBranchId { get; set; }
+
+        [Display(Name = "Id oddziału odbierającego")]
+        public short ReceiverBranchId { get; set; }
 
         [Display(Name = "Nazwa statusu przesyłki")]
         public string Name { get; set; }

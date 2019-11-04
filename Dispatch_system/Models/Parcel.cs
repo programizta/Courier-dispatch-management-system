@@ -11,8 +11,38 @@ namespace Dispatch_system.Models
         [Required]
         public int ParcelId { get; set; }
 
+        [Required]
+        public string SenderStreetName { get; set; }
+
+        [Required]
+        public int SenderBlockNumber { get; set; }
+
+        [Required]
+        public int SenderFlatNumber { get; set; }
+
+        [Required]
+        public string SenderPostalCode { get; set; }
+
+        [Required]
+        public string SenderCity { get; set; }
+
+        [Required]
+        public string ReceiverStreetName { get; set; }
+
+        [Required]
+        public int ReceiverBlockNumber { get; set; }
+
+        [Required]
+        public int ReceiverFlatNumber { get; set; }
+
+        [Required]
+        public string ReceiverPostalCode { get; set; }
+
+        [Required]
+        public string ReceiverCity { get; set; }
+
         //[Required] - powiedzmy, że koszt przesyłki określi pracownik nadawczy
-        public decimal Value { get; set; }
+        public decimal? Price { get; set; }
 
         [Required]
         public decimal Weight { get; set; }
@@ -20,21 +50,22 @@ namespace Dispatch_system.Models
         [Required]
         public decimal Volume { get; set; }
 
+        // to określa pracownik oddziału
         public int? Insurance { get; set; }
 
-        public short StatusId { get; set; }
+        public short ParcelStatusId { get; set; }
 
         public short DeliveryAttempts { get; set; }
 
         public int? EmployeeId { get; set; }
 
         [Required]
-        public short BranchId { get; set; }
-
-        [Required]
         public bool IsSent { get; set; }
 
         [Required]
-        public int ParcelAddressesId { get; set; }
+        public short SenderBranchId { get; set; }
+
+        [Required]
+        public short ReceiverBranchId { get; set; }
     }
 }
