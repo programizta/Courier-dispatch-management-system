@@ -24,6 +24,8 @@ namespace Dispatch_system.Services
                               where parcel.ParcelId == parcelId
                               select new ClientParcelViewModel
                               {
+                                  IsSent = parcel.IsSent,
+                                  ParcelId = parcel.ParcelId,
                                   SenderStreetName = parcel.SenderStreetName,
                                   SenderBlockNumber = parcel.SenderBlockNumber,
                                   SenderFlatNumber = parcel.SenderFlatNumber,
@@ -39,6 +41,8 @@ namespace Dispatch_system.Services
 
             ClientParcelViewModel model = new ClientParcelViewModel
             {
+                IsSent = queryModel.FirstOrDefault().IsSent,
+                ParcelId = queryModel.FirstOrDefault().ParcelId,
                 SenderStreetName = queryModel.FirstOrDefault().SenderStreetName,
                 SenderBlockNumber = queryModel.FirstOrDefault().SenderBlockNumber,
                 SenderFlatNumber = queryModel.FirstOrDefault().SenderFlatNumber,

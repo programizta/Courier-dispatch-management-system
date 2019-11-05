@@ -35,3 +35,29 @@ body {
         display: none;
     }
 }
+
+.navbar-header {
+    background-color: black;
+}
+
+.phoneInHand {
+    background-image: url(../images/checkStatus.jpg);
+    background-size: 500px;
+    opacity: 0.65;
+    width: 500px;
+    height: 300px;
+}
+
+.checkStatus {
+    color: white;
+    margin-left: 50px;
+    margin-top: 200px;
+    font-size: 20px;
+}
+
+.top-panel {
+    margin-top: 5px;
+    text-align: right;
+    font-size: 30px;
+    opacity: 0.6;
+}

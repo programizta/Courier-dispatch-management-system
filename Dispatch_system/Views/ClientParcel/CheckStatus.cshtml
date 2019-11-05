@@ -1,0 +1,35 @@
+﻿@model ClientParcelViewModel
+
+<h3>Status przesyłki numer @Model.ParcelId</h3>
+
+<br />
+<br
+
+<div class="container">
+    <h3>Dane nadawcy przesyłki:</h3>
+
+    <div class="row">
+        <div>
+            <label>Adres nadawcy:</label>
+            ul.@Model.SenderStreetName @Model.SenderBlockNumber/@Model.SenderStreetName, @Model.SenderPostalCode @Model.SenderCity
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <label>Adres odbiorcy:</label>
+            ul.@Model.ReceiverStreetName @Model.ReceiverBlockNumber/@Model.ReceiverStreetName, @Model.ReceiverPostalCode @Model.ReceiverCity
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        @if (!Model.IsSent)
+        {
+            <label>Twoja przesyłka nie została jeszcze przez Ciebie zaniesiona do punktu nadawczego. Prosimy się udać z nią do najbliższego punktu w celu dopełnienia formalności.</label>
+        }
+    </div>
+
+
+</div>

@@ -1,0 +1,12 @@
+﻿@model ClientParcelViewModel
+
+<h3 class="center-block">
+    Proszę wprowadzić kod przesyłki poniżej w celu sprawdzenia jej statusu:
+</h3>
+
+<form method="post" asp-area="" asp-controller="ClientParcel" asp-action="CheckStatus">
+
+    <input name="parcelId" type="text"/>
+
+    <button type="submit" class="btn btn-primary">Sprawdź</button>
+</form>
