@@ -42,15 +42,29 @@ body {
 
 .phoneInHand {
     background-image: url(../images/checkStatus.jpg);
-    background-size: 500px;
-    opacity: 0.65;
-    width: 500px;
+    background-size: 550px;
+    width: 550px;
+    height: 300px;
+}
+
+.postParcel {
+    margin-left: 30px;
+    background-image: url(../images/courier.jpg);
+    background-size: 550px;
+    width: 550px;
     height: 300px;
 }
 
 .checkStatus {
     color: white;
-    margin-left: 50px;
+    margin-left: 10px;
+    margin-top: 200px;
+    font-size: 20px;
+}
+
+.postParcelLabel {
+    color: black;
+    margin-left: 10px;
     margin-top: 200px;
     font-size: 20px;
 }
