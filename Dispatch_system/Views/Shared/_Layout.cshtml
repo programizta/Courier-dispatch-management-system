@@ -52,7 +52,8 @@
                     {
                         // zaimplementuj kontroler i widok
                         <li><a asp-controller="parcel" asp-action="checkStatus">Zarejestruj przesyłkę</a></li>
-                        <li><a asp-controller="parcel" asp-action="checkStatus">Znajdź przesyłkę</a></li>
+                        <li><a asp-controller="parcel" asp-action="checkStatus">Aktualne zlecenia</a></li>
+                        <li><a asp-controller="parcel" asp-action="checkStatus">Wyszukaj przesyłkę</a></li>
                     }
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Kurier"))
@@ -110,7 +111,7 @@
     </nav>
 
 
-    
+
 
     <partial name="_CookieConsentPartial" />
 

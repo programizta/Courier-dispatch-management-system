@@ -91,5 +91,34 @@ namespace Dispatch_system.Services
             context.Add(parcel);
             context.SaveChanges();
         }
+
+        public ClientParcelViewModel ValidateParcelData(int parcelId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ClientParcelViewModel> NotSentParcels(int branchId)
+        {
+            var parcelList = (from parcel in context.Parcels
+                              join status in context.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
+                              where parcel.SenderBranchId == branchId && parcel.IsSent == false
+                              select new ClientParcelViewModel
+                              {
+                                  ParcelId = parcel.ParcelId,
+                                  SenderStreetName = parcel.SenderStreetName,
+                                  SenderBlockNumber = parcel.SenderBlockNumber,
+                                  SenderFlatNumber = parcel.SenderFlatNumber,
+                                  SenderPostalCode = parcel.SenderPostalCode,
+                                  SenderCity = parcel.SenderCity,
+                                  ReceiverStreetName = parcel.ReceiverStreetName,
+                                  ReceiverBlockNumber = parcel.ReceiverBlockNumber,
+                                  ReceiverFlatNumber = parcel.ReceiverFlatNumber,
+                                  ReceiverPostalCode = parcel.ReceiverPostalCode,
+                                  ReceiverCity = parcel.ReceiverCity
+                              }
+                ).ToList();
+
+            return parcelList;
+        }
     }
 }

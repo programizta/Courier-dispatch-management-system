@@ -41,7 +41,7 @@ namespace Dispatch_system.Models
         [Required]
         public string ReceiverCity { get; set; }
 
-        //[Required] - powiedzmy, że koszt przesyłki określi pracownik nadawczy
+        [Required]
         public decimal? Price { get; set; }
 
         [Required]

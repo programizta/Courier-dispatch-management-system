@@ -13,10 +13,14 @@ namespace Dispatch_system.Controllers
     public class ClientParcelController : Controller
     {
         private readonly IClientParcelService clientParcelService;
+        // to mi będzie potrzebne później dla ograniczenia dostępu dla zalogowanych
+        // użytkowników z określoną rolą
         private readonly UserManager<IdentityUser> userManager;
         private readonly ApplicationDbContext context;
 
-        public ClientParcelController(IClientParcelService clientParcelService, UserManager<IdentityUser> userManager, ApplicationDbContext context)
+        public ClientParcelController(IClientParcelService clientParcelService,
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context)
         {
             this.clientParcelService = clientParcelService;
             this.userManager = userManager;
@@ -40,16 +44,18 @@ namespace Dispatch_system.Controllers
                 var queryModel = (from branches in context.Branches
                                   join parcels in context.Parcels on branches.BranchId equals parcels.SenderBranchId
                                   where branches.BranchCode == senderBranchCode
-                                  select new BranchDataViewModel
+                                  select new ParcelSummaryViewModel
                                   {
+                                      ParcelId = parcels.ParcelId,
                                       BranchName = branches.BranchName,
                                       BranchAddress = branches.BranchAddress,
                                       BranchCity = branches.City
                                   }
                     );
 
-                BranchDataViewModel model = new BranchDataViewModel
+                ParcelSummaryViewModel model = new ParcelSummaryViewModel
                 {
+                    ParcelId = queryModel.First().ParcelId,
                     BranchName = queryModel.First().BranchName,
                     BranchAddress = queryModel.First().BranchAddress,
                     BranchCity = queryModel.First().BranchCity
@@ -62,7 +68,7 @@ namespace Dispatch_system.Controllers
         }
 
         [HttpGet]
-        public IActionResult ThanksPage(BranchDataViewModel model)
+        public IActionResult ThanksPage(ParcelSummaryViewModel model)
         {
             return View(model);
         }

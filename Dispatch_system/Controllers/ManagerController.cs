@@ -12,9 +12,9 @@ namespace Dispatch_system.Controllers
 {
     public class ManagerController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
         private readonly IEmployeeSerivce employeeRepository;
         private readonly ApplicationDbContext context;
+        private readonly UserManager<IdentityUser> userManager;
 
         public ManagerController(IEmployeeSerivce employeeRepository, ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
