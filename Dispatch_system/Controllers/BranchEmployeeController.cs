@@ -1,5 +1,6 @@
 ﻿using Dispatch_system.Data;
 using Dispatch_system.Services;
+using Dispatch_system.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -35,13 +36,12 @@ namespace Dispatch_system.Controllers
             var user = await userManager.GetUserAsync(User);
 
             var branchIdModel = (from person in context.People
-                            join employee in context.Employees on person.EmployeeId equals employee.EmployeeId
-                            where person.UserId == user.Id
-                            select new
-                            {
-                                employee.BranchId
-                            }
-                );
+                                 join employee in context.Employees on person.EmployeeId equals employee.EmployeeId
+                                 where person.UserId == user.Id
+                                 select new
+                                 {
+                                     employee.BranchId
+                                 });
 
             int branchId = branchIdModel.First().BranchId;
 
@@ -50,6 +50,22 @@ namespace Dispatch_system.Controllers
             return View(notSentParcels);
         }
 
+        [HttpGet]
+        public IActionResult CompleteData(int id)
+        {
+            var parcel = parcelService.GetParcel(id);
+            return View(parcel);
+        }
 
+        [HttpPost]
+        public IActionResult CompleteData(ClientParcelViewModel parcelModel)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("ParcelSummary", "BranchEmployee", parcelModel);
+            }
+
+            return View(parcelModel);
+        }
     }
 }

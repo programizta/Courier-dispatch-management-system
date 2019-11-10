@@ -1,0 +1,73 @@
+﻿@model ClientParcelViewModel
+
+<h1>Edycja danych przesyłki</h1>
+<h5>Formularz do edycji danych nadawanej przesyłki</h5>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div id="ui">
+                <form enctype="multipart/form-data" asp-controller="BranchEmployee" asp-action="CompleteData" class="form-group">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Nazwa ulicy nadawcy:</label>
+                            <input asp-for="SenderStreetName" class="form-control" value="@Model.SenderStreetName" />
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Numer bloku nadawcy:</label>
+                            <input asp-for="SenderBlockNumber" class="form-control" value="@Model.SenderBlockNumber" />
+                        </div>
+                    </div>
+
+                    <label>Numer mieszkania nadawcy:</label>
+                    <input asp-for="SenderFlatNumber" class="form-control" value="@Model.SenderFlatNumber" />
+
+                    <label>Kod pocztowy nadawcy:</label>
+                    <input asp-for="SenderPostalCode" class="form-control" value="@Model.SenderPostalCode" />
+
+                    <label>Miasto nadawcy:</label>
+                    <input asp-for="SenderCity" class="form-control" value="@Model.SenderCity" />
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Nazwa ulicy odbiorcy:</label>
+                            <input asp-for="ReceiverStreetName" class="form-control" value="@Model.ReceiverStreetName" />
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Numer bloku odbiorcy:</label>
+                            <input asp-for="ReceiverBlockNumber" class="form-control" value="@Model.ReceiverBlockNumber" />
+                        </div>
+                    </div>
+
+                    <label>Numer mieszkania odbiorcy:</label>
+                    <input asp-for="ReceiverFlatNumber" class="form-control" value="@Model.ReceiverFlatNumber" />
+
+                    <label>Kod pocztowy odbiorcy:</label>
+                    <input asp-for="ReceiverPostalCode" class="form-control" value="@Model.ReceiverPostalCode" />
+
+                    <label>Miasto odbiorcy:</label>
+                    <input asp-for="ReceiverCity" class="form-control" value="@Model.ReceiverCity" />
+
+                    <label>Waga przesyłki:</label>
+                    <input asp-for="Weight" class="form-control" value="@Model.Weight" />
+
+                    <label>Objętość przesyłki:</label>
+                    <input asp-for="Volume" class="form-control" value="@Model.Volume" /> cm3
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="col-lg-pull-6">
+                        <br />
+                        <button type="submit" class="btn btn-primary btn-block">Przejdź do podsumowania</button>
+                        <a asp-controller="BranchEmployee" asp-action="NotSentParcels" class="btn btn-danger btn-block">Wróć do listy przesyłek</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

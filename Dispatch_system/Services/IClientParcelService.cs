@@ -12,5 +12,6 @@ namespace Dispatch_system.Services
         ClientParcelViewModel CheckStatus(int parcelId);
         ClientParcelViewModel ValidateParcelData(int parcelId);
         List<ClientParcelViewModel> NotSentParcels(int branchId);
+        ClientParcelViewModel GetParcel(int parcelId);
     }
 }

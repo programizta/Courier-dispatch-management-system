@@ -41,23 +41,7 @@ namespace Dispatch_system.Models
                              Role = role.Name
                          });
 
-            EmployeeViewModel employeeModel = new EmployeeViewModel
-            {
-                PersonId = model.FirstOrDefault().PersonId,
-                EmployeeId = model.FirstOrDefault().EmployeeId,
-                BranchName = model.FirstOrDefault().BranchName,
-                UserId = model.FirstOrDefault().UserId,
-                FirstName = model.FirstOrDefault().FirstName,
-                LastName = model.FirstOrDefault().LastName,
-                Address = model.FirstOrDefault().Address,
-                Email = model.FirstOrDefault().Email,
-                City = model.FirstOrDefault().City,
-                PostalCode = model.FirstOrDefault().PostalCode,
-                PhoneNumber = model.FirstOrDefault().PhoneNumber,
-                Role = model.FirstOrDefault().Role
-            };
-
-            return employeeModel;
+            return model.First();
         }
 
         public List<EmployeeViewModel> GetAllEmployees()

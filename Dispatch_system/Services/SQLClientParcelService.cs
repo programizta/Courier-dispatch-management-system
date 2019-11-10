@@ -19,44 +19,27 @@ namespace Dispatch_system.Services
 
         public ClientParcelViewModel CheckStatus(int parcelId)
         {
-            var queryModel = (from parcel in context.Parcels
-                              join status in context.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
-                              where parcel.ParcelId == parcelId
-                              select new ClientParcelViewModel
-                              {
-                                  IsSent = parcel.IsSent,
-                                  ParcelId = parcel.ParcelId,
-                                  SenderStreetName = parcel.SenderStreetName,
-                                  SenderBlockNumber = parcel.SenderBlockNumber,
-                                  SenderFlatNumber = parcel.SenderFlatNumber,
-                                  SenderCity = parcel.SenderCity,
-                                  SenderPostalCode = parcel.SenderPostalCode,
-                                  ReceiverStreetName = parcel.ReceiverStreetName,
-                                  ReceiverBlockNumber = parcel.ReceiverBlockNumber,
-                                  ReceiverFlatNumber = parcel.ReceiverFlatNumber,
-                                  ReceiverCity = parcel.ReceiverCity,
-                                  ReceiverPostalCode = parcel.ReceiverPostalCode,
-                                  Name = status.StatusName
-                              });
+            var model = (from parcel in context.Parcels
+                         join status in context.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
+                         where parcel.ParcelId == parcelId
+                         select new ClientParcelViewModel
+                         {
+                             IsSent = parcel.IsSent,
+                             ParcelId = parcel.ParcelId,
+                             SenderStreetName = parcel.SenderStreetName,
+                             SenderBlockNumber = parcel.SenderBlockNumber,
+                             SenderFlatNumber = parcel.SenderFlatNumber,
+                             SenderCity = parcel.SenderCity,
+                             SenderPostalCode = parcel.SenderPostalCode,
+                             ReceiverStreetName = parcel.ReceiverStreetName,
+                             ReceiverBlockNumber = parcel.ReceiverBlockNumber,
+                             ReceiverFlatNumber = parcel.ReceiverFlatNumber,
+                             ReceiverCity = parcel.ReceiverCity,
+                             ReceiverPostalCode = parcel.ReceiverPostalCode,
+                             Name = status.StatusName
+                         });
 
-            ClientParcelViewModel model = new ClientParcelViewModel
-            {
-                IsSent = queryModel.FirstOrDefault().IsSent,
-                ParcelId = queryModel.FirstOrDefault().ParcelId,
-                SenderStreetName = queryModel.FirstOrDefault().SenderStreetName,
-                SenderBlockNumber = queryModel.FirstOrDefault().SenderBlockNumber,
-                SenderFlatNumber = queryModel.FirstOrDefault().SenderFlatNumber,
-                SenderCity = queryModel.FirstOrDefault().SenderCity,
-                SenderPostalCode = queryModel.FirstOrDefault().SenderPostalCode,
-                ReceiverStreetName = queryModel.FirstOrDefault().ReceiverStreetName,
-                ReceiverBlockNumber = queryModel.FirstOrDefault().ReceiverBlockNumber,
-                ReceiverFlatNumber = queryModel.FirstOrDefault().ReceiverFlatNumber,
-                ReceiverCity = queryModel.FirstOrDefault().ReceiverCity,
-                ReceiverPostalCode = queryModel.FirstOrDefault().ReceiverPostalCode,
-                Name = queryModel.FirstOrDefault().Name
-            };
-
-            return model;
+            return model.First();
         }
 
         public void ParcelPost(ClientParcelViewModel clientParcelViewModel)
@@ -119,6 +102,21 @@ namespace Dispatch_system.Services
                 ).ToList();
 
             return parcelList;
+        }
+
+        public ClientParcelViewModel GetParcel(int parcelId)
+        {
+            var parcelData = CheckStatus(parcelId);
+
+
+            parcelData.Weight = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelId).Weight;
+            parcelData.Volume = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelId).Volume;
+
+            // te wartości będą obliczane gdy będę przechodził do podsumowania przesyłki
+            //parcelData.Insurrance = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelId).Insurance;
+            //parcelData.Price = 8 + weight * (decimal)0.1 + volume * (decimal)0.02;
+
+            return parcelData;
         }
     }
 }

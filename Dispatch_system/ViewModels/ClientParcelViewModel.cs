@@ -55,8 +55,14 @@ namespace Dispatch_system.ViewModels
         [Display(Name = "Głębokość")]
         public decimal Depth { get; set; }
 
+        [Display(Name = "Objętość przesyłki")] // właściwość do edycji tylko przez p.punktu nadawczego
+        public decimal Volume { get; set; }
+
         [Display(Name = "Ubezpieczenie")]
         public int? Insurrance { get; set; }
+
+        [Display(Name = "Cena przesyłki")] // właściwość do edycji tylko przez p.punktu nadawczego
+        public decimal? Price { get; set; }
 
         [Display(Name = "Id oddziału wysyłającego")]
         public short SenderBranchId { get; set; }
