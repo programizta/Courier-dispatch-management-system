@@ -67,5 +67,11 @@ namespace Dispatch_system.Controllers
 
             return View(parcelModel);
         }
+
+        [HttpGet]
+        public IActionResult ParcelSummary(ClientParcelViewModel parcelModel)
+        {
+            return View(parcelModel);
+        }
     }
 }

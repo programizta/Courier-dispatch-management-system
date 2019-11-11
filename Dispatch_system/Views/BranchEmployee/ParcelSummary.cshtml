@@ -1,0 +1,38 @@
+﻿@model ClientParcelViewModel
+
+<h1>Podsumowanie</h1>
+<h5>Przejrzyj dokładnie wprowadzane dane przesyłki do systemu:</h5>
+
+<div class="container">
+
+    <div class="row">
+        Adres nadawcy: <br />
+        ul. @Model.SenderStreetName @Model.SenderBlockNumber/@Model.SenderFlatNumber, @Model.SenderPostalCode @Model.SenderCity
+        <br />
+        <br />
+        Adres odbiorcy: <br />
+        ul. @Model.ReceiverStreetName @Model.ReceiverBlockNumber/@Model.ReceiverFlatNumber, @Model.ReceiverPostalCode @Model.ReceiverCity
+    </div>
+
+    <form enctype="multipart/form-data" asp-controller="BranchEmployee" asp-action="CompleteData" class="form-group">
+        <input hidden asp-for="@Model.ParcelId" />
+
+        <input hidden asp-for="@Model.SenderStreetName" />
+        <input hidden asp-for="@Model.SenderBlockNumber" />
+        <input hidden asp-for="@Model.SenderFlatNumber" />
+        <input hidden asp-for="@Model.SenderPostalCode" />
+        <input hidden asp-for="@Model.SenderCity" />
+
+        <input hidden asp-for="@Model.ReceiverStreetName" />
+        <input hidden asp-for="@Model.ReceiverBlockNumber" />
+        <input hidden asp-for="@Model.ReceiverFlatNumber" />
+        <input hidden asp-for="@Model.ReceiverPostalCode" />
+        <input hidden asp-for="@Model.ReceiverCity" />
+
+        <input hidden asp-for="@Model.Weight" />
+        <input hidden asp-for="@Model.Volume" />
+
+        <button type="submit" class="btn btn-primary btn-block">Wprowadź przesyłkę do systemu</button>
+        <a asp-controller="BranchEmployee" asp-action="CompleteData" asp-route-id="@Model.ParcelId" class="btn btn-danger btn-block">Popraw dane przesyłki</a>
+    </form>
+</div>

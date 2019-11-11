@@ -12,8 +12,6 @@
                 <form enctype="multipart/form-data" asp-controller="Manager" asp-action="EditEmployee" class="form-group">
                     <input hidden asp-for="@Model.UserId" />
                     <input hidden asp-for="@Model.EmployeeId" />
-                    <input hidden asp-for="@Model.BranchName" />
-                    <input hidden asp-for="@Model.Email" />
                     <div class="row">
                         <div class="col-lg-6">
                             <label>Imię:</label>
@@ -55,7 +53,6 @@
                             <div>
                                 @{
                                     @Html.DropDownListFor(x => x.Role, new List<SelectListItem> {
-                                   new SelectListItem { Text = "Klient", Value = "Klient", },
                                new SelectListItem { Text = "Kierownik", Value = "Kierownik", },
                                new SelectListItem { Text = "Kurier", Value = "Kurier", },
                                new SelectListItem { Text = "Pracownik oddziału", Value = "Pracownik oddziału" }}, new { id="Role", @class="form-control" })
@@ -76,7 +73,7 @@
                        new SelectListItem { Text = "Oddział Brzozów", Value = "Oddział Brzozów", },
                        new SelectListItem { Text = "Oddział Przemyśl", Value = "Oddział Przemyśl", },
                        new SelectListItem { Text = "Oddział Dębica", Value = "Oddział Dębica", },
-                       new SelectListItem { Text = "Oddział Krosno", Value = "Oddział Krosno" }}, new { id="branchname", @class="form-control" })
+                       new SelectListItem { Text = "Oddział Krosno", Value = "Oddział Krosno" }}, new { id="BranchName", @class="form-control" })
                         }
                     </div>
 

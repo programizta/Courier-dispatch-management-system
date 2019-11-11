@@ -11,6 +11,7 @@
         <div class="col-lg-6">
             <div id="ui">
                 <form enctype="multipart/form-data" asp-controller="BranchEmployee" asp-action="CompleteData" class="form-group">
+                    <input hidden asp-for="@Model.ParcelId" />
                     <div class="row">
                         <div class="col-lg-6">
                             <label>Nazwa ulicy nadawcy:</label>
@@ -57,7 +58,7 @@
                     <input asp-for="Weight" class="form-control" value="@Model.Weight" />
 
                     <label>Objętość przesyłki:</label>
-                    <input asp-for="Volume" class="form-control" value="@Model.Volume" /> cm3
+                    <input asp-for="Volume" class="form-control" value="@Model.Volume" />
 
                     <div asp-validation-summary="All" class="text-danger"></div>
 
