@@ -85,7 +85,7 @@ namespace Dispatch_system.Controllers
                     return RedirectToAction("index", "home");
                 }
 
-                ModelState.AddModelError(string.Empty, "Próba logowania zakończyła się niepowodzeniem");
+                ModelState.AddModelError(string.Empty, "Podano błędny adres e-mail lub hasło");
             }
 
             return View(model);

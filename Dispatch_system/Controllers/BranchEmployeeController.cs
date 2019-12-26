@@ -14,8 +14,6 @@ namespace Dispatch_system.Controllers
 {
     public class BranchEmployeeController : Controller
     {
-        // to mi będzie potrzebne później dla ograniczenia dostępu dla zalogowanych
-        // użytkowników z określoną rolą
         private readonly IClientParcelService parcelService;
         private readonly UserManager<IdentityUser> userManager;
         private readonly ApplicationDbContext context;
@@ -30,7 +28,7 @@ namespace Dispatch_system.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> NotSentParcels()
         {
             var user = await userManager.GetUserAsync(User);
