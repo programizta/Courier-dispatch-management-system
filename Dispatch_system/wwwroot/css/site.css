@@ -60,6 +60,20 @@ body {
         color: #d1d1d1;
     }
 
+.navbar-default .btn-link {
+    height: 50px;
+    color: #d1d1d1;
+}
+
+    .navbar-default .btn-link:hover {
+        background-color: #3c3578;
+        color: #fff;
+    }
+
+    .navbar-default .btn-link:focus {
+        color: #d1d1d1;
+    }
+
 .phoneInHand {
     background-image: url(../images/checkStatus.jpg);
     background-size: 550px;
@@ -106,3 +120,29 @@ body {
     padding: 5px 0 5px 0;
     text-align: center;
 }
+
+.list-item {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    color: #d1d1d1;
+    text-decoration: none;
+    cursor: pointer;
+    width: 250px;
+}
+
+    .list-item:hover {
+        color: #d1d1d1;
+        background-color: #3c3578;
+        text-decoration: underline;
+    }
+
+    .dropdown-menu {
+        width: 250px;
+        text-align: center;
+    }

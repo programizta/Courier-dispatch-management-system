@@ -10,7 +10,7 @@ namespace Dispatch_system.Models
     {
         EmployeeViewModel GetEmployee(int id);
         List<EmployeeViewModel> GetAllEmployees();
-        void UpdateEmployee(Person personChanges, EmployeeViewModel employeeChanges);
+        void UpdateEmployee(/*Person personChanges, */EmployeeViewModel employeeChanges);
         void DeleteEmployee(int id);
     }
 }

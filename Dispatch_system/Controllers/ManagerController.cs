@@ -66,52 +66,54 @@ namespace Dispatch_system.Controllers
 
                 short branchId = context.Branches.FirstOrDefault(x => x.BranchName == model.BranchName).BranchId;
 
-                Employee employee = new Employee
-                {
-                    BranchId = branchId
-                };
-
-                context.Add(employee);
-                context.SaveChanges();
-
                 Person newPerson = new Person
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Address = model.Address,
-                    City = model.City,
-                    PostalCode = model.PostalCode,
                     PhoneNumber = model.PhoneNumber,
-                    UserId = userId,
-                    EmployeeId = employee.EmployeeId
+                    UserId = userId
                 };
 
                 context.Add(newPerson);
                 context.SaveChanges();
 
+                int personId = context.People.FirstOrDefault(x => x.PersonId == newPerson.PersonId).PersonId;
+
+                UserAddress userAddress = new UserAddress
+                {
+                    PersonId = personId,
+                    StreetName = model.StreetName,
+                    BlockNumber = model.BlockNumber,
+                    FlatNumber = model.FlatNumber,
+                    PostalCode = model.PostalCode,
+                    City = model.City
+                };
+
+                context.Add(userAddress);
+                context.SaveChanges();
+
+                Employee newEmployee = new Employee
+                {
+                    PersonId = personId,
+                    BranchId = branchId,
+                    IsCourier = model.Role == "Kurier" ? true : false
+                };
+
+                context.Add(newEmployee);
+                context.SaveChanges();
             }
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult EditEmployee(EmployeeViewModel model)
+        public IActionResult EditEmployee(EmployeeViewModel employeeChanges)
         {
             if (ModelState.IsValid)
             {
-                var employee = employeeRepository.GetEmployee(model.EmployeeId);
+                var employee = employeeRepository.GetEmployee(employeeChanges.EmployeeId);
 
-                Person person = new Person
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Address = model.Address,
-                    City = model.City,
-                    PostalCode = model.PostalCode,
-                    PhoneNumber = model.PhoneNumber
-                };
-
-                employeeRepository.UpdateEmployee(person, model);
+                employeeRepository.UpdateEmployee(employeeChanges);
             }
 
             return RedirectToAction("AllEmployees", "Manager");

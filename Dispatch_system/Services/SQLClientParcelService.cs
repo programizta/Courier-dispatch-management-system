@@ -29,17 +29,22 @@ namespace Dispatch_system.Services
                              SenderStreetName = parcel.SenderStreetName,
                              SenderBlockNumber = parcel.SenderBlockNumber,
                              SenderFlatNumber = parcel.SenderFlatNumber,
-                             SenderCity = parcel.SenderCity,
                              SenderPostalCode = parcel.SenderPostalCode,
+                             SenderCity = parcel.SenderCity,
                              ReceiverStreetName = parcel.ReceiverStreetName,
                              ReceiverBlockNumber = parcel.ReceiverBlockNumber,
                              ReceiverFlatNumber = parcel.ReceiverFlatNumber,
-                             ReceiverCity = parcel.ReceiverCity,
                              ReceiverPostalCode = parcel.ReceiverPostalCode,
-                             Name = status.StatusName
+                             ReceiverCity = parcel.ReceiverCity,
+                             StatusName = status.StatusName
                          });
 
-            return model.First();
+            if (model.FirstOrDefault() != null)
+            {
+                return model.First();
+            }
+
+            return null;
         }
 
         public void ParcelPost(ClientParcelViewModel clientParcelViewModel)
@@ -48,27 +53,27 @@ namespace Dispatch_system.Services
             int senderBranchCode = int.Parse(new string(clientParcelViewModel.SenderPostalCode.Take(2).ToArray()));
             int receiverBranchCode = int.Parse(new string(clientParcelViewModel.ReceiverPostalCode.Take(2).ToArray()));
 
-            short senderBranchId = context.Branches.First(x => x.BranchCode == senderBranchCode).BranchId;
-            short receiverBranchId = context.Branches.First(x => x.BranchCode == receiverBranchCode).BranchId;
+            short lastBranchId = context.Branches.First(x => x.BranchCode == senderBranchCode).BranchId;
+            short targetBranchId = context.Branches.First(x => x.BranchCode == receiverBranchCode).BranchId;
 
             Parcel parcel = new Parcel
             {
                 SenderStreetName = clientParcelViewModel.SenderStreetName,
                 SenderBlockNumber = clientParcelViewModel.SenderBlockNumber,
                 SenderFlatNumber = clientParcelViewModel.SenderFlatNumber,
-                SenderCity = clientParcelViewModel.SenderCity,
                 SenderPostalCode = clientParcelViewModel.SenderPostalCode,
+                SenderCity = clientParcelViewModel.SenderCity,
                 ReceiverStreetName = clientParcelViewModel.ReceiverStreetName,
                 ReceiverBlockNumber = clientParcelViewModel.ReceiverBlockNumber,
                 ReceiverFlatNumber = clientParcelViewModel.ReceiverFlatNumber,
-                ReceiverCity = clientParcelViewModel.ReceiverCity,
                 ReceiverPostalCode = clientParcelViewModel.ReceiverPostalCode,
+                ReceiverCity = clientParcelViewModel.ReceiverCity,
                 Weight = clientParcelViewModel.Weight,
                 Volume = volume,
                 IsSent = false,
-                SenderBranchId = senderBranchId,
-                ReceiverBranchId = receiverBranchId,
-                ParcelStatusId = 6 // "przesyłka nadana online"
+                LastBranchId = lastBranchId,
+                TargetBranchId = targetBranchId,
+                ParcelStatusId = 6 // "status: przesyłka nadana online"
             };
 
             context.Add(parcel);
@@ -84,7 +89,7 @@ namespace Dispatch_system.Services
         {
             var parcelList = (from parcel in context.Parcels
                               join status in context.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
-                              where parcel.SenderBranchId == branchId && parcel.IsSent == false
+                              where parcel.LastBranchId == branchId && parcel.IsSent == false
                               select new ClientParcelViewModel
                               {
                                   ParcelId = parcel.ParcelId,

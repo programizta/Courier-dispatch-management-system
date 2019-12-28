@@ -11,7 +11,12 @@ namespace Dispatch_system.Models
         [Required]
         public int EmployeeId { get; set; }
 
+        public int? PersonId { get; set; }
+
         [Required]
         public int BranchId { get; set; }
+
+        [Required]
+        public bool IsCourier { get; set; }
     }
 }

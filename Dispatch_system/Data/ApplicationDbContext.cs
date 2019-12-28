@@ -14,6 +14,7 @@ namespace Dispatch_system.Data
         public DbSet<ParcelStatus> ParcelStatuses { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Person> People { get; set; }
+        public DbSet<UserAddress> UserAddresses { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

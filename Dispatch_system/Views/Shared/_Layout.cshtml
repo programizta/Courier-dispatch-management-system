@@ -41,20 +41,21 @@
                         <li><a asp-controller="Manager" asp-action="AllEmployees">Pracownicy</a></li>
                     }
 
-                    <li><a asp-controller="ClientParcel" asp-action="PostParcel">Nadaj przesyłkę online</a></li>
+                    <li><a asp-controller="ClientParcel" asp-action="EnterCode">Sprawdź status przesyłki</a></li>
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Klient"))
                     {
                         // zaimplementuj kontroler i widok
-                        <li><a asp-controller="ClientParcel" asp-action="EnterCode">Sprawdź status przesyłki</a></li>
+                        //<li><a asp-controller="ClientParcel" asp-action="EnterCode">Sprawdź status przesyłki</a></li>
+                        <li><a asp-controller="ClientParcel" asp-action="PostParcel">Nadaj przesyłkę online</a></li>
                     }
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Pracownik oddziału"))
                     {
                         // zaimplementuj kontroler i widok
                         <li><a asp-controller="parcel" asp-action="checkStatus">Zarejestruj przesyłkę</a></li>
-                        <li><a asp-controller="parcel" asp-action="checkStatus">Aktualne zlecenia</a></li>
-                        <li><a asp-controller="parcel" asp-action="checkStatus">Wyszukaj przesyłkę</a></li>
+                        <li><a asp-controller="BranchEmployee" asp-action="NotSentParcels">Aktualne zlecenia</a></li>
+                        //<li><a asp-controller="parcel" asp-action="checkStatus">Wyszukaj przesyłkę</a></li>
                     }
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Kurier"))
@@ -91,20 +92,29 @@
 
                 @if (signInManager.IsSignedIn(User))
                 {
-                    <div class="">
-                        <form asp-action="logout" asp-controller="account">
-                            <button type="submit" class="navbar-right navbar-link btn btn-link">
-                                Wyloguj @User.Identity.Name
-                            </button>
-                        </form>
-                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item dropdown">
+                            <a class="navbar-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button">
+                                @User.Identity.Name
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="Home" asp-action="About">Dane osobowe</a></li>
+                                <li>
+                                    <form asp-action="logout" asp-controller="account">
+                                        <button class="list-item" type="submit">Wyloguj</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 }
 
                 @if (!signInManager.IsSignedIn(User))
                 {
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-controller="account" asp-action="register" class="navbar-link"><span class="glyphicon glyphicon-user"></span> Rejestracja</a></li>
-                        <li><a asp-controller="account" asp-action="login" class="navbar-link"><span class="glyphicon glyphicon-log-in"></span> Logowanie</a></li>
+                        <li><a asp-controller="Account" asp-action="Register" class="navbar-link"><span class="glyphicon glyphicon-user"></span> Rejestracja</a></li>
+                        <li><a asp-controller="Account" asp-action="Login" class="navbar-link"><span class="glyphicon glyphicon-log-in"></span> Logowanie</a></li>
                     </ul>
                 }
             </div>

@@ -42,7 +42,7 @@ namespace Dispatch_system.Controllers
                 int senderBranchCode = int.Parse(new string(clientParcelViewModel.SenderPostalCode.Take(2).ToArray()));
 
                 var queryModel = (from branches in context.Branches
-                                  join parcels in context.Parcels on branches.BranchId equals parcels.SenderBranchId
+                                  join parcels in context.Parcels on branches.BranchId equals parcels.LastBranchId
                                   where branches.BranchCode == senderBranchCode
                                   select new ParcelSummaryViewModel
                                   {
@@ -61,7 +61,7 @@ namespace Dispatch_system.Controllers
                     BranchCity = queryModel.First().BranchCity
                 };
 
-                return RedirectToAction("ThanksPage", "ClientParcel", model);
+                return RedirectToAction("ThanksPage", model);
             }
 
             return View();
@@ -78,7 +78,8 @@ namespace Dispatch_system.Controllers
         {
             var model = clientParcelService.CheckStatus(int.Parse(parcelId));
 
-            return View(model);
+            if (model != null) return View(model);
+            return RedirectToAction("ParcelNotFound", "Home");
         }
 
         [HttpGet]

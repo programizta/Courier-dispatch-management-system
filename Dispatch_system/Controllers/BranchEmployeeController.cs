@@ -34,7 +34,7 @@ namespace Dispatch_system.Controllers
             var user = await userManager.GetUserAsync(User);
 
             var branchIdModel = (from person in context.People
-                                 join employee in context.Employees on person.EmployeeId equals employee.EmployeeId
+                                 join employee in context.Employees on person.PersonId equals employee.PersonId
                                  where person.UserId == user.Id
                                  select new
                                  {

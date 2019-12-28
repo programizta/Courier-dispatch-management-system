@@ -11,6 +11,16 @@ namespace Dispatch_system.Models
         [Required]
         public int ParcelId { get; set; }
 
+        public int? CourierId { get; set; }
+
+        public short ParcelStatusId { get; set; }
+
+        [Required]
+        public short LastBranchId { get; set; }
+
+        [Required]
+        public short TargetBranchId { get; set; }
+
         [Required]
         public string SenderStreetName { get; set; }
 
@@ -21,10 +31,10 @@ namespace Dispatch_system.Models
         public int SenderFlatNumber { get; set; }
 
         [Required]
-        public string SenderPostalCode { get; set; }
+        public string SenderCity { get; set; }
 
         [Required]
-        public string SenderCity { get; set; }
+        public string SenderPostalCode { get; set; }
 
         [Required]
         public string ReceiverStreetName { get; set; }
@@ -36,10 +46,10 @@ namespace Dispatch_system.Models
         public int ReceiverFlatNumber { get; set; }
 
         [Required]
-        public string ReceiverPostalCode { get; set; }
+        public string ReceiverCity { get; set; }
 
         [Required]
-        public string ReceiverCity { get; set; }
+        public string ReceiverPostalCode { get; set; }
 
         [Required]
         public decimal? Price { get; set; }
@@ -53,19 +63,9 @@ namespace Dispatch_system.Models
         // to określa pracownik oddziału
         public int? Insurance { get; set; }
 
-        public short ParcelStatusId { get; set; }
-
         public short DeliveryAttempts { get; set; }
-
-        public int? EmployeeId { get; set; }
 
         [Required]
         public bool IsSent { get; set; }
-
-        [Required]
-        public short SenderBranchId { get; set; }
-
-        [Required]
-        public short ReceiverBranchId { get; set; }
     }
 }

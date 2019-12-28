@@ -34,7 +34,7 @@
                     <form asp-action="DeleteEmployee" asp-controller="Manager" asp-route-id="@employee.PersonId" method="post">
                         <button class="btn btn-danger" type="submit">Usuń</button>
                     </form>
-                    <form asp-action="EditEmployee" asp-controller="Manager" asp-route-id="@employee.PersonId" method="get">
+                    <form asp-action="EditEmployee" asp-controller="Manager" asp-route-id="@employee.EmployeeId" method="get">
                         <button class="btn btn-primary" type="submit">Edycja</button>
                     </form>
                 </td>

@@ -44,5 +44,11 @@ namespace Dispatch_system.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult ParcelNotFound()
+        {
+            return View();
+        }
     }
 }

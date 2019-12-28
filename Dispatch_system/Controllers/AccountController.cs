@@ -47,9 +47,30 @@ namespace Dispatch_system.Controllers
                                 .Users.FirstOrDefault(u => u.Email == model.Email)
                                 .Id;
 
-                Person newPerson = new Person { FirstName = model.FirstName, LastName = model.LastName, Address = model.Address, City = model.City, PostalCode = model.PostalCode, PhoneNumber = model.PhoneNumber, UserId = userId };
+                Person newPerson = new Person
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.PhoneNumber,
+                    UserId = userId
+                };
 
                 context.Add(newPerson);
+                context.SaveChanges();
+
+                int personId = context.People.FirstOrDefault(x => x.UserId == userId).PersonId;
+
+                UserAddress newUserAddress = new UserAddress
+                {
+                    PersonId = personId,
+                    StreetName = model.StreetName,
+                    BlockNumber = model.BlockNumber,
+                    FlatNumber = model.FlatNumber,
+                    PostalCode = model.PostalCode,
+                    City = model.City
+                };
+
+                context.Add(newUserAddress);
                 context.SaveChanges();
 
                 if (result.Succeeded)
@@ -96,6 +117,18 @@ namespace Dispatch_system.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("index", "home");
+        }
+
+        [HttpGet]
+        public IActionResult PersonalData()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult PersonalData(int personId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -14,11 +14,11 @@ namespace Dispatch_system.ViewModels
         [Display(Name = "Nazwa ulicy nadawcy")]
         public string SenderStreetName { get; set; }
 
-        [Display(Name = "Numer bloku nadawcy")]
-        public int SenderBlockNumber { get; set; }
-
         [Display(Name = "Numer mieszkania nadawcy")]
         public int SenderFlatNumber { get; set; }
+
+        [Display(Name = "Numer bloku nadawcy")]
+        public int SenderBlockNumber { get; set; }
 
         [Display(Name = "Kod pocztowy nadawcy")]
         [DataType(DataType.PostalCode)]
@@ -30,11 +30,11 @@ namespace Dispatch_system.ViewModels
         [Display(Name = "Nazwa ulicy odbiorcy")]
         public string ReceiverStreetName { get; set; }
 
-        [Display(Name = "Numer bloku odbiorcy")]
-        public int ReceiverBlockNumber { get; set; }
-
         [Display(Name = "Numer mieszkania odbiorcy")]
         public int ReceiverFlatNumber { get; set; }
+
+        [Display(Name = "Numer bloku odbiorcy")]
+        public int ReceiverBlockNumber { get; set; }
 
         [Display(Name = "Kod pocztowy odbiorcy")]
         [DataType(DataType.PostalCode)]
@@ -64,14 +64,14 @@ namespace Dispatch_system.ViewModels
         [Display(Name = "Cena przesyłki")] // właściwość do edycji tylko przez p.punktu nadawczego
         public decimal? Price { get; set; }
 
-        [Display(Name = "Id oddziału wysyłającego")]
-        public short SenderBranchId { get; set; }
+        [Display(Name = "Id ostatniego oddziału, w którym była paczka")]
+        public short LastBranchId { get; set; }
 
         [Display(Name = "Id oddziału odbierającego")]
-        public short ReceiverBranchId { get; set; }
+        public short TargetBranchId { get; set; }
 
         [Display(Name = "Nazwa statusu przesyłki")]
-        public string Name { get; set; }
+        public string StatusName { get; set; }
 
         [Display(Name = "Czy wysłana")]
         public bool IsSent { get; set; }
