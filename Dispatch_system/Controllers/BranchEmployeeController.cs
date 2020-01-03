@@ -14,11 +14,11 @@ namespace Dispatch_system.Controllers
 {
     public class BranchEmployeeController : Controller
     {
-        private readonly IClientParcelService parcelService;
+        private readonly IBranchParcelService parcelService;
         private readonly UserManager<IdentityUser> userManager;
         private readonly ApplicationDbContext context;
 
-        public BranchEmployeeController(IClientParcelService parcelService,
+        public BranchEmployeeController(IBranchParcelService parcelService,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext context)
         {
@@ -60,7 +60,9 @@ namespace Dispatch_system.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("ParcelSummary", "BranchEmployee", parcelModel);
+                parcelService.Post(parcelModel.ParcelId);
+
+                return RedirectToAction("Index", "Home");
             }
 
             return View(parcelModel);

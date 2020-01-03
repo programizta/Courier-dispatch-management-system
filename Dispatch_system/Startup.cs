@@ -48,6 +48,14 @@ namespace Dispatch_system
             // wyzwala metodę z klasy SQLClientParcelService
             services.AddScoped<IClientParcelService, SQLClientParcelService>();
 
+            // wywołanie jakiejkowiek metody z interfejsu IBranchParcelService
+            // wyzwala metodę z klasy SQLBranchParcelService
+            services.AddScoped<IBranchParcelService, SQLBranchParcelService>();
+
+            // wywołanie jakiejkowiek metody z interfejsu IAccountService
+            // wyzwala metodę z klasy SQLAccountService
+            services.AddScoped<IAccountService, SQLAccountService>();
+
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;

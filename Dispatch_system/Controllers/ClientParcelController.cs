@@ -38,7 +38,7 @@ namespace Dispatch_system.Controllers
         {
             if (ModelState.IsValid)
             {
-                clientParcelService.ParcelPost(clientParcelViewModel);
+                clientParcelService.PostOnline(clientParcelViewModel);
                 int senderBranchCode = int.Parse(new string(clientParcelViewModel.SenderPostalCode.Take(2).ToArray()));
 
                 var queryModel = (from branches in context.Branches

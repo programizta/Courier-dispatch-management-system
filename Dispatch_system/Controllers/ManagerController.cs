@@ -16,7 +16,9 @@ namespace Dispatch_system.Controllers
         private readonly ApplicationDbContext context;
         private readonly UserManager<IdentityUser> userManager;
 
-        public ManagerController(IEmployeeSerivce employeeRepository, ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public ManagerController(IEmployeeSerivce employeeRepository,
+            ApplicationDbContext context,
+            UserManager<IdentityUser> userManager)
         {
             this.employeeRepository = employeeRepository;
             this.context = context;

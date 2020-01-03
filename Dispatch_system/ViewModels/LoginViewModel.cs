@@ -20,5 +20,8 @@ namespace Dispatch_system.ViewModels
 
         [Display(Name = "Zapamiętaj mnie")]
         public bool RememberMe { get; set; }
+
+        [Display(Name = "Id osoby")]
+        public int PersonId { get; set; }
     }
 }

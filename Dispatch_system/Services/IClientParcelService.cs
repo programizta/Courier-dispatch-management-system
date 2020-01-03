@@ -8,10 +8,8 @@ namespace Dispatch_system.Services
 {
     public interface IClientParcelService
     {
-        void ParcelPost(ClientParcelViewModel clientParcelViewModel);
+        void PostOnline(ClientParcelViewModel clientParcelViewModel);
         ClientParcelViewModel CheckStatus(int parcelId);
-        ClientParcelViewModel ValidateParcelData(int parcelId);
-        List<ClientParcelViewModel> NotSentParcels(int branchId);
-        ClientParcelViewModel GetParcel(int parcelId);
+        ClientParcelViewModel ValidateParcelData(int parcelId); // do zaimplementowania
     }
 }

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dispatch_system.Data;
 using Dispatch_system.Models;
+using Dispatch_system.Services;
 using Dispatch_system.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +16,17 @@ namespace Dispatch_system.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IAccountService accountService;
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly ApplicationDbContext context;
 
-        public AccountController(UserManager<IdentityUser> userManager,
-                                 SignInManager<IdentityUser> signInManager,
-                                 ApplicationDbContext context)
+        public AccountController(IAccountService accountService,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            ApplicationDbContext context)
         {
+            this.accountService = accountService;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.context = context;
@@ -103,7 +107,9 @@ namespace Dispatch_system.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    int? personId = accountService.GetPersonId(model.Email);
+                    ViewData["PersonId"] = personId;
+                    return RedirectToAction("index", "home", ViewData["PersonId"]);
                 }
 
                 ModelState.AddModelError(string.Empty, "Podano błędny adres e-mail lub hasło");
@@ -120,15 +126,10 @@ namespace Dispatch_system.Controllers
         }
 
         [HttpGet]
-        public IActionResult PersonalData()
-        {
-            return View();
-        }
-
-        [HttpPost]
         public IActionResult PersonalData(int personId)
         {
-            throw new NotImplementedException();
+            var data = accountService.GetPersonalData(personId);
+            return View(data);
         }
     }
 }

@@ -36,17 +36,14 @@
                 <ul class="nav navbar-nav">
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Kierownik"))
                     {
-                        // zaimplementuj kontroler i widok
-                        //<li><a asp-controller="manage" asp-action="managerPanel">Panel kierowniczy</a></li>
                         <li><a asp-controller="Manager" asp-action="AllEmployees">Pracownicy</a></li>
                     }
 
                     <li><a asp-controller="ClientParcel" asp-action="EnterCode">Sprawdź status przesyłki</a></li>
+                    <li><a asp-controller="ClientParcel" asp-action="Redirect">Przekieruj przesyłkę</a></li>
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Klient"))
                     {
-                        // zaimplementuj kontroler i widok
-                        //<li><a asp-controller="ClientParcel" asp-action="EnterCode">Sprawdź status przesyłki</a></li>
                         <li><a asp-controller="ClientParcel" asp-action="PostParcel">Nadaj przesyłkę online</a></li>
                     }
 
@@ -61,7 +58,8 @@
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Kurier"))
                     {
                         // zaimplementuj kontroler i widok
-                        <li><a asp-controller="parcel" asp-action="checkStatus">Panel kuriera</a></li>
+                        <li><a asp-controller="parcel" asp-action="checkStatus">Do dostarczenia</a></li>
+                        <li><a asp-controller="parcel" asp-action="checkStatus">Do zwrotu</a></li>
                     }
 
                     @if (!signInManager.IsSignedIn(User) || (signInManager.IsSignedIn(User) && User.IsInRole("Klient")))
@@ -92,6 +90,8 @@
 
                 @if (signInManager.IsSignedIn(User))
                 {
+                    var person = ViewData["PersonId"] as int?;
+
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item dropdown">
                             <a class="navbar-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button">
@@ -99,7 +99,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a asp-controller="Home" asp-action="About">Dane osobowe</a></li>
+                                <li><a asp-controller="Account" asp-action="PersonalData" , asp-route-id="@person">Dane osobowe</a></li>
                                 <li>
                                     <form asp-action="logout" asp-controller="account">
                                         <button class="list-item" type="submit">Wyloguj</button>

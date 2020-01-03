@@ -47,7 +47,7 @@ namespace Dispatch_system.Services
             return null;
         }
 
-        public void ParcelPost(ClientParcelViewModel clientParcelViewModel)
+        public void PostOnline(ClientParcelViewModel clientParcelViewModel)
         {
             decimal volume = clientParcelViewModel.Width * clientParcelViewModel.Height * clientParcelViewModel.Depth;
             int senderBranchCode = int.Parse(new string(clientParcelViewModel.SenderPostalCode.Take(2).ToArray()));
@@ -83,45 +83,6 @@ namespace Dispatch_system.Services
         public ClientParcelViewModel ValidateParcelData(int parcelId)
         {
             throw new NotImplementedException();
-        }
-
-        public List<ClientParcelViewModel> NotSentParcels(int branchId)
-        {
-            var parcelList = (from parcel in context.Parcels
-                              join status in context.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
-                              where parcel.LastBranchId == branchId && parcel.IsSent == false
-                              select new ClientParcelViewModel
-                              {
-                                  ParcelId = parcel.ParcelId,
-                                  SenderStreetName = parcel.SenderStreetName,
-                                  SenderBlockNumber = parcel.SenderBlockNumber,
-                                  SenderFlatNumber = parcel.SenderFlatNumber,
-                                  SenderPostalCode = parcel.SenderPostalCode,
-                                  SenderCity = parcel.SenderCity,
-                                  ReceiverStreetName = parcel.ReceiverStreetName,
-                                  ReceiverBlockNumber = parcel.ReceiverBlockNumber,
-                                  ReceiverFlatNumber = parcel.ReceiverFlatNumber,
-                                  ReceiverPostalCode = parcel.ReceiverPostalCode,
-                                  ReceiverCity = parcel.ReceiverCity
-                              }
-                ).ToList();
-
-            return parcelList;
-        }
-
-        public ClientParcelViewModel GetParcel(int parcelId)
-        {
-            var parcelData = CheckStatus(parcelId);
-
-
-            parcelData.Weight = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelId).Weight;
-            parcelData.Volume = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelId).Volume;
-
-            // te wartości będą obliczane gdy będę przechodził do podsumowania przesyłki
-            //parcelData.Insurrance = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelId).Insurance;
-            //parcelData.Price = 8 + weight * (decimal)0.1 + volume * (decimal)0.02;
-
-            return parcelData;
         }
     }
 }
