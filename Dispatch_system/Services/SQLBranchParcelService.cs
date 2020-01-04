@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dispatch_system.Data;
 using Dispatch_system.Models;
 using Dispatch_system.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dispatch_system.Services
 {
@@ -81,21 +82,32 @@ namespace Dispatch_system.Services
             return parcelList;
         }
 
-        public void Post(int parcelId)
+        public short GetBranchId(int branchCode)
         {
-            Parcel parcelQuery = (from parcel in context.Parcels
-                                  where parcel.ParcelId == parcelId
-                                  select new Parcel
-                                  {
-                                      //CourierId = parcel.CourierId,
-                                      CourierId = 8, // na razie na sztywno
-                                      ParcelStatusId = 2,
-                                      IsSent = true,
-                                      TargetBranchId = parcel.TargetBranchId
-                                  }).ToList().First();
+            short branchId = context.Branches.FirstOrDefault(x => x.BranchCode == branchCode).BranchId;
 
-            context.Parcels.Update(parcelQuery);
+            return branchId;
+        }
+
+        public void Post(ClientParcelViewModel parcelViewModel)
+        {
+            Parcel parcel = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelViewModel.ParcelId);
+
+            parcel.ParcelStatusId = 2;
+            parcel.IsSent = true;
+            parcel.ReceiverStreetName = parcelViewModel.ReceiverStreetName;
+            parcel.ReceiverFlatNumber = parcelViewModel.ReceiverFlatNumber;
+            parcel.ReceiverBlockNumber = parcelViewModel.ReceiverBlockNumber;
+            parcel.ReceiverCity = parcelViewModel.ReceiverCity;
+            parcel.ReceiverPostalCode = parcelViewModel.ReceiverPostalCode;
+
+            short branchCode = short.Parse(new string(parcelViewModel.ReceiverPostalCode.Take(2).ToArray()));
+            short branchId = GetBranchId(branchCode);
+
+            context.Parcels.Update(parcel);
             context.SaveChanges();
+
+            context.Database.ExecuteSqlCommand("AssignParcelToCourier @p0, @p1", branchId, parcelViewModel.ParcelId);
         }
 
         public int AssignParcelToCourier(Parcel parcel)

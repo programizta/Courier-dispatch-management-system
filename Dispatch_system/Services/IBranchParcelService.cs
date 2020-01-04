@@ -12,7 +12,7 @@ namespace Dispatch_system.Services
         List<ClientParcelViewModel> NotSentParcels(int branchId);
         ClientParcelViewModel GetParcel(int parcelId);
         void MarkAsDelivered(); // metoda do oznaczenia paczki jako dostarczona
-        void Post(int parcelId);
+        void Post(ClientParcelViewModel parcelViewModel);
         int AssignParcelToCourier(Parcel parcel);
     }
 }

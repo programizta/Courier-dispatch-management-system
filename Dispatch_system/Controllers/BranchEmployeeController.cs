@@ -60,7 +60,7 @@ namespace Dispatch_system.Controllers
         {
             if (ModelState.IsValid)
             {
-                parcelService.Post(parcelModel.ParcelId);
+                parcelService.Post(parcelModel);
 
                 return RedirectToAction("Index", "Home");
             }
