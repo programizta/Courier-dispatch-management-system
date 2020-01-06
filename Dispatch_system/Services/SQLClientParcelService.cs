@@ -10,17 +10,17 @@ namespace Dispatch_system.Services
 {
     public class SQLClientParcelService : IClientParcelService
     {
-        private readonly ApplicationDbContext context;
+        private readonly ApplicationDbContext dbContext;
 
-        public SQLClientParcelService(ApplicationDbContext context)
+        public SQLClientParcelService(ApplicationDbContext dbContext)
         {
-            this.context = context;
+            this.dbContext = dbContext;
         }
 
         public ClientParcelViewModel CheckStatus(int parcelId)
         {
-            var model = (from parcel in context.Parcels
-                         join status in context.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
+            var model = (from parcel in dbContext.Parcels
+                         join status in dbContext.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
                          where parcel.ParcelId == parcelId
                          select new ClientParcelViewModel
                          {
@@ -53,8 +53,8 @@ namespace Dispatch_system.Services
             int senderBranchCode = int.Parse(new string(clientParcelViewModel.SenderPostalCode.Take(2).ToArray()));
             int receiverBranchCode = int.Parse(new string(clientParcelViewModel.ReceiverPostalCode.Take(2).ToArray()));
 
-            short lastBranchId = context.Branches.First(x => x.BranchCode == senderBranchCode).BranchId;
-            short targetBranchId = context.Branches.First(x => x.BranchCode == receiverBranchCode).BranchId;
+            short lastBranchId = dbContext.Branches.First(x => x.BranchCode == senderBranchCode).BranchId;
+            short targetBranchId = dbContext.Branches.First(x => x.BranchCode == receiverBranchCode).BranchId;
 
             Parcel parcel = new Parcel
             {
@@ -76,8 +76,8 @@ namespace Dispatch_system.Services
                 ParcelStatusId = 6 // "status: przesyłka nadana online"
             };
 
-            context.Add(parcel);
-            context.SaveChanges();
+            dbContext.Add(parcel);
+            dbContext.SaveChanges();
         }
 
         public ClientParcelViewModel ValidateParcelData(int parcelId)

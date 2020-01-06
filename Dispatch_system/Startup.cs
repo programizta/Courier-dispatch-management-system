@@ -56,6 +56,10 @@ namespace Dispatch_system
             // wyzwala metodę z klasy SQLAccountService
             services.AddScoped<IAccountService, SQLAccountService>();
 
+            // wywołanie jakiejkowiek metody z interfejsu ICourierService
+            // wyzwala metodę z klasy SQLCourierService
+            services.AddScoped<ICourierService, SQLCourierService>();
+
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;

@@ -61,17 +61,14 @@ namespace Dispatch_system.Controllers
             if (ModelState.IsValid)
             {
                 parcelService.Post(parcelModel);
-
-                return RedirectToAction("Index", "Home");
             }
-
-            return View(parcelModel);
+            return RedirectToAction("Sent");
         }
 
         [HttpGet]
-        public IActionResult ParcelSummary(ClientParcelViewModel parcelModel)
+        public IActionResult Sent()
         {
-            return View(parcelModel);
+            return View();
         }
     }
 }
