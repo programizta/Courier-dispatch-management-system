@@ -10,6 +10,5 @@ namespace Dispatch_system.Services
     {
         void PostOnline(ClientParcelViewModel clientParcelViewModel);
         ClientParcelViewModel CheckStatus(int parcelId);
-        ClientParcelViewModel ValidateParcelData(int parcelId); // do zaimplementowania
     }
 }

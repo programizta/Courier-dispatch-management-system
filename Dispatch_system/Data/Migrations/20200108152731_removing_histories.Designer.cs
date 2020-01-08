@@ -4,14 +4,16 @@ using Dispatch_system.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dispatch_system.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200108152731_removing_histories")]
+    partial class removing_histories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +52,7 @@ namespace Dispatch_system.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<short>("BranchId");
+                    b.Property<int>("BranchId");
 
                     b.Property<bool>("IsCourier");
 
@@ -70,6 +72,8 @@ namespace Dispatch_system.Data.Migrations
                     b.Property<int?>("CourierId");
 
                     b.Property<short>("DeliveryAttempts");
+
+                    b.Property<int?>("Insurance");
 
                     b.Property<bool>("IsSent");
 
@@ -108,8 +112,6 @@ namespace Dispatch_system.Data.Migrations
 
                     b.Property<short>("TargetBranchId");
 
-                    b.Property<bool>("VisibleForCourier");
-
                     b.Property<decimal>("Volume");
 
                     b.Property<decimal>("Weight");
@@ -117,28 +119,6 @@ namespace Dispatch_system.Data.Migrations
                     b.HasKey("ParcelId");
 
                     b.ToTable("Parcels");
-                });
-
-            modelBuilder.Entity("Dispatch_system.Models.ParcelHistory", b =>
-                {
-                    b.Property<int>("ParcelHistoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BranchName")
-                        .IsRequired();
-
-                    b.Property<string>("DateTime")
-                        .IsRequired();
-
-                    b.Property<int>("ParcelId");
-
-                    b.Property<string>("StatusName")
-                        .IsRequired();
-
-                    b.HasKey("ParcelHistoryId");
-
-                    b.ToTable("ParcelHistories");
                 });
 
             modelBuilder.Entity("Dispatch_system.Models.ParcelStatus", b =>

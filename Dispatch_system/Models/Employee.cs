@@ -14,7 +14,7 @@ namespace Dispatch_system.Models
         public int? PersonId { get; set; }
 
         [Required]
-        public int BranchId { get; set; }
+        public short BranchId { get; set; }
 
         [Required]
         public bool IsCourier { get; set; }

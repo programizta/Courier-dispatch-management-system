@@ -41,7 +41,7 @@ namespace Dispatch_system.Controllers
                                      employee.BranchId
                                  });
 
-            int branchId = branchIdModel.First().BranchId;
+            short branchId = branchIdModel.First().BranchId;
 
             var notSentParcels = parcelService.NotSentParcels(branchId);
 
@@ -67,6 +67,19 @@ namespace Dispatch_system.Controllers
 
         [HttpGet]
         public IActionResult Sent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ParcelDelivered(int parcelId)
+        {
+            parcelService.MarkAsDelivered(parcelId);
+            return RedirectToAction("ParcelDelivered");
+        }
+
+        [HttpGet]
+        public IActionResult ParcelDelivered()
         {
             return View();
         }

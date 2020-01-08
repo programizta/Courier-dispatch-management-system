@@ -60,12 +60,12 @@ namespace Dispatch_system.Models
         [Required]
         public decimal Volume { get; set; }
 
-        // to określa pracownik oddziału
-        public int? Insurance { get; set; }
-
         public short DeliveryAttempts { get; set; }
 
         [Required]
         public bool IsSent { get; set; }
+
+        [Required]
+        public bool VisibleForCourier { get; set; }
     }
 }

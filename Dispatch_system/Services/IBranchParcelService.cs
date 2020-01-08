@@ -9,10 +9,9 @@ namespace Dispatch_system.Services
 {
     public interface IBranchParcelService
     {
-        List<ClientParcelViewModel> NotSentParcels(int branchId);
+        List<ClientParcelViewModel> NotSentParcels(short branchId);
         ClientParcelViewModel GetParcel(int parcelId);
-        void MarkAsDelivered(); // metoda do oznaczenia paczki jako dostarczona
+        void MarkAsDelivered(int parcelId); // metoda do oznaczenia paczki jako dostarczona
         void Post(ClientParcelViewModel parcelViewModel);
-        int AssignParcelToCourier(Parcel parcel);
     }
 }

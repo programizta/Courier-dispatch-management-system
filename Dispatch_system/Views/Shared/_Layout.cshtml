@@ -39,6 +39,13 @@
                         <li><a asp-controller="Manager" asp-action="AllEmployees">Pracownicy</a></li>
                     }
 
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Pracownik sortowni"))
+                    {
+                        // zaimplementuj kontroler, akcje i widoki
+                        <li><a asp-controller="Manager" asp-action="AllEmployees35">Paczki do posortowania</a></li>
+                        <li><a asp-controller="Manager" asp-action="AllEmployees35">Zarejestruj nowe przesyłki w węźle sortowniczym</a></li>
+                    }
+
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Klient"))
                     {
                         <li><a asp-controller="ClientParcel" asp-action="EnterCode">Sprawdź status przesyłki</a></li>
@@ -52,7 +59,7 @@
                         <li><a asp-controller="parcel" asp-action="checkStatus">Zarejestruj przesyłkę</a></li>
                         <li><a asp-controller="BranchEmployee" asp-action="NotSentParcels">Aktualne zlecenia</a></li>
                         // zaimplementuj akcję
-                        <li><a asp-controller="parcel" asp-action="checkStatus">Przesyłki do odebrania</a></li>
+                        <li><a asp-controller="BranchEmployee" asp-action="ParcelsToPick">Przesyłki do odebrania</a></li>
                     }
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Kurier"))

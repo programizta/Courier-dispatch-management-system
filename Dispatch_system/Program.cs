@@ -28,12 +28,11 @@ namespace Dispatch_system
 
                 dbContext.Database.Migrate();
 
-                // uproszczenie - nie będzie dodawania nowych użytkowników z inną rolą
-                // niż rola "Klient"
                 var managerRole = new IdentityRole("Kierownik");
                 var courierRole = new IdentityRole("Kurier");
                 var branchEmployeeRole = new IdentityRole("Pracownik oddziału");
                 var clientRole = new IdentityRole("Klient");
+                var warehousemanRole = new IdentityRole("Pracownik sortowni");
 
                 if (!dbContext.Roles.Any())
                 {
@@ -41,6 +40,7 @@ namespace Dispatch_system
                     roleMgr.CreateAsync(courierRole).GetAwaiter().GetResult();
                     roleMgr.CreateAsync(branchEmployeeRole).GetAwaiter().GetResult();
                     roleMgr.CreateAsync(clientRole).GetAwaiter().GetResult();
+                    roleMgr.CreateAsync(warehousemanRole).GetAwaiter().GetResult();
                 }
 
                 if (!dbContext.Users.Any(u => u.UserName == "kierownik"))
@@ -71,6 +71,12 @@ namespace Dispatch_system
                         Email = "klient@poczta.pl"
                     };
 
+                    var warehousemanUser = new IdentityUser
+                    {
+                        UserName = "pracownik_sortowni@poczta.pl",
+                        Email = "pracownik_sortowni@poczta.pl"
+                    };
+
                     var resultManager = userMgr.CreateAsync(managerUser, password).GetAwaiter().GetResult();
                     userMgr.AddToRoleAsync(managerUser, managerRole.Name).GetAwaiter().GetResult();
 
@@ -82,6 +88,9 @@ namespace Dispatch_system
 
                     var resultClient = userMgr.CreateAsync(clientUser, password).GetAwaiter().GetResult();
                     userMgr.AddToRoleAsync(clientUser, clientRole.Name).GetAwaiter().GetResult();
+
+                    var resultwarehouseMan = userMgr.CreateAsync(warehousemanUser, password).GetAwaiter().GetResult();
+                    userMgr.AddToRoleAsync(warehousemanUser, warehousemanRole.Name).GetAwaiter().GetResult();
                 }
             }
             host.Run();

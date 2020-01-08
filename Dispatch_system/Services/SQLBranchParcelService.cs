@@ -53,12 +53,16 @@ namespace Dispatch_system.Services
             return null;
         }
 
-        public void MarkAsDelivered()
+        public void MarkAsDelivered(int parcelId)
         {
-            throw new NotImplementedException();
+            var parcel = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelId);
+
+            parcel.ParcelStatusId = 9; // Przesyłka dostarczona
+            context.Parcels.Update(parcel);
+            context.SaveChanges();
         }
 
-        public List<ClientParcelViewModel> NotSentParcels(int branchId)
+        public List<ClientParcelViewModel> NotSentParcels(short branchId)
         {
             var parcelList = (from parcel in context.Parcels
                               join status in context.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
@@ -93,7 +97,7 @@ namespace Dispatch_system.Services
         {
             Parcel parcel = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelViewModel.ParcelId);
 
-            parcel.ParcelStatusId = 2;
+            parcel.ParcelStatusId = 1; // "status: przesyłka odebrana od nadawcy"
             parcel.IsSent = true;
             parcel.ReceiverStreetName = parcelViewModel.ReceiverStreetName;
             parcel.ReceiverFlatNumber = parcelViewModel.ReceiverFlatNumber;
@@ -110,17 +114,9 @@ namespace Dispatch_system.Services
             context.Database.ExecuteSqlCommand("AssignParcelToCourier @p0, @p1", branchId, parcelViewModel.ParcelId);
         }
 
-        public int AssignParcelToCourier(Parcel parcel)
+        public void SendParcelsToMainBranch(short branchId)
         {
-            //var courierId = (from employee in context.Employees
-            //                 from parcelQuery in context.Parcels
-            //                 .Where(parcelQry => parcelQry.CourierId == employee.EmployeeId && employee.IsCourier == true && parcelQry.TargetBranchId == parcel.TargetBranchId).DefaultIfEmpty()
-            //                 select new
-            //                 {
-            //                     employee.EmployeeId,
-            //                     parcelQuery.CourierId.
-            //                 });
-            return 1;
+            context.Database.ExecuteSqlCommand("SendParcelsToMainBranch @p0", branchId);
         }
     }
 }

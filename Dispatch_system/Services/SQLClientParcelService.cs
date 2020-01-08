@@ -73,16 +73,12 @@ namespace Dispatch_system.Services
                 IsSent = false,
                 LastBranchId = lastBranchId,
                 TargetBranchId = targetBranchId,
+                VisibleForCourier = false,
                 ParcelStatusId = 6 // "status: przesyłka nadana online"
             };
 
             dbContext.Add(parcel);
             dbContext.SaveChanges();
-        }
-
-        public ClientParcelViewModel ValidateParcelData(int parcelId)
-        {
-            throw new NotImplementedException();
         }
     }
 }
