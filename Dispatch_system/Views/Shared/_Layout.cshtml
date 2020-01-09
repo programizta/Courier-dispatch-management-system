@@ -42,8 +42,8 @@
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Pracownik sortowni"))
                     {
                         // zaimplementuj kontroler, akcje i widoki
-                        <li><a asp-controller="Manager" asp-action="AllEmployees35">Paczki do posortowania</a></li>
-                        <li><a asp-controller="Manager" asp-action="AllEmployees35">Zarejestruj nowe przesyłki w węźle sortowniczym</a></li>
+                        <li><a asp-controller="Warehouseman" asp-action="AcceptParcels">Paczki do posortowania</a></li>
+                        <li><a asp-controller="Warehouseman" asp-action="AcceptParcels">Zarejestruj nowe przesyłki w węźle sortowniczym</a></li>
                     }
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Klient"))
