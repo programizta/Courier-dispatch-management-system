@@ -66,6 +66,24 @@ namespace Dispatch_system.Controllers
         }
 
         [HttpGet]
+        public IActionResult RegisterParcel()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult RegisterParcel(ClientParcelViewModel parcelViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                parcelService.RegisterParcel(parcelViewModel);
+                return RedirectToAction("Sent");
+            }
+
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult Sent()
         {
             return View();

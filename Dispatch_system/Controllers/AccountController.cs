@@ -80,7 +80,7 @@ namespace Dispatch_system.Controllers
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("Index", "Home");
                 }
 
                 foreach (var error in result.Errors)

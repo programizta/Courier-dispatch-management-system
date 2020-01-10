@@ -13,5 +13,6 @@ namespace Dispatch_system.Services
         ClientParcelViewModel GetParcel(int parcelId);
         void MarkAsDelivered(int parcelId); // metoda do oznaczenia paczki jako dostarczona
         void Post(ClientParcelViewModel parcelViewModel);
+        void RegisterParcel(ClientParcelViewModel parcelViewModel);
     }
 }

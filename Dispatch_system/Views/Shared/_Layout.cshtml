@@ -42,22 +42,25 @@
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Pracownik sortowni"))
                     {
                         // zaimplementuj kontroler, akcje i widoki
-                        <li><a asp-controller="Warehouseman" asp-action="AcceptParcels">Paczki do posortowania</a></li>
+                        <li><a asp-controller="Warehouseman" asp-action="ListOfCouriers">Lista kurierów</a></li>
                         <li><a asp-controller="Warehouseman" asp-action="AcceptParcels">Zarejestruj nowe przesyłki w węźle sortowniczym</a></li>
                     }
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Klient"))
                     {
+                        // zaimplementuj widok i akcję wyświetlania historii przesyłki
                         <li><a asp-controller="ClientParcel" asp-action="EnterCode">Sprawdź status przesyłki</a></li>
                         <li><a asp-controller="ClientParcel" asp-action="PostParcel">Nadaj przesyłkę online</a></li>
-                        <li><a asp-controller="ClientParcel" asp-action="Redirect">Przekieruj przesyłkę</a></li>
+                        //<li><a asp-controller="ClientParcel" asp-action="Redirect">Przekieruj przesyłkę</a></li>
                     }
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Pracownik oddziału"))
                     {
                         // zaimplementuj akcję i widok
-                        <li><a asp-controller="parcel" asp-action="checkStatus">Zarejestruj przesyłkę</a></li>
+                        <li><a asp-controller="BranchEmployee" asp-action="RegisterParcel">Zarejestruj przesyłkę</a></li>
                         <li><a asp-controller="BranchEmployee" asp-action="NotSentParcels">Aktualne zlecenia</a></li>
+                        // zaimplementuj akcję
+                        <li><a asp-controller="BranchEmployee" asp-action="SendParcels">Przesyłki do wysłania</a></li>
                         // zaimplementuj akcję
                         <li><a asp-controller="BranchEmployee" asp-action="ParcelsToPick">Przesyłki do odebrania</a></li>
                     }

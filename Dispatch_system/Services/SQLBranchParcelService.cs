@@ -11,11 +11,11 @@ namespace Dispatch_system.Services
 {
     public class SQLBranchParcelService : IBranchParcelService
     {
-        private readonly ApplicationDbContext context;
+        private readonly ApplicationDbContext dbContext;
 
         public SQLBranchParcelService(ApplicationDbContext context)
         {
-            this.context = context;
+            this.dbContext = context;
         }
 
         /// <summary>
@@ -25,8 +25,8 @@ namespace Dispatch_system.Services
         /// <returns></returns>
         public ClientParcelViewModel GetParcel(int parcelId)
         {
-            var model = (from parcel in context.Parcels
-                         join status in context.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
+            var model = (from parcel in dbContext.Parcels
+                         join status in dbContext.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
                          where parcel.ParcelId == parcelId
                          select new ClientParcelViewModel
                          {
@@ -55,17 +55,17 @@ namespace Dispatch_system.Services
 
         public void MarkAsDelivered(int parcelId)
         {
-            var parcel = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelId);
+            var parcel = dbContext.Parcels.FirstOrDefault(x => x.ParcelId == parcelId);
 
             parcel.ParcelStatusId = 9; // Przesyłka dostarczona
-            context.Parcels.Update(parcel);
-            context.SaveChanges();
+            dbContext.Parcels.Update(parcel);
+            dbContext.SaveChanges();
         }
 
         public List<ClientParcelViewModel> NotSentParcels(short branchId)
         {
-            var parcelList = (from parcel in context.Parcels
-                              join status in context.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
+            var parcelList = (from parcel in dbContext.Parcels
+                              join status in dbContext.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
                               where parcel.LastBranchId == branchId && parcel.IsSent == false
                               select new ClientParcelViewModel
                               {
@@ -88,14 +88,14 @@ namespace Dispatch_system.Services
 
         public short GetBranchId(int branchCode)
         {
-            short branchId = context.Branches.FirstOrDefault(x => x.BranchCode == branchCode).BranchId;
+            short branchId = dbContext.Branches.FirstOrDefault(x => x.BranchCode == branchCode).BranchId;
 
             return branchId;
         }
 
         public void Post(ClientParcelViewModel parcelViewModel)
         {
-            Parcel parcel = context.Parcels.FirstOrDefault(x => x.ParcelId == parcelViewModel.ParcelId);
+            Parcel parcel = dbContext.Parcels.FirstOrDefault(x => x.ParcelId == parcelViewModel.ParcelId);
 
             parcel.ParcelStatusId = 1; // "status: przesyłka odebrana od nadawcy"
             parcel.IsSent = true;
@@ -108,15 +108,51 @@ namespace Dispatch_system.Services
             short branchCode = short.Parse(new string(parcelViewModel.ReceiverPostalCode.Take(2).ToArray()));
             short branchId = GetBranchId(branchCode);
 
-            context.Parcels.Update(parcel);
-            context.SaveChanges();
+            dbContext.Parcels.Update(parcel);
+            dbContext.SaveChanges();
 
-            context.Database.ExecuteSqlCommand("AssignParcelToCourier @p0, @p1", branchId, parcelViewModel.ParcelId);
+            dbContext.Database.ExecuteSqlCommand("AssignParcelToCourier @p0, @p1", branchId, parcelViewModel.ParcelId);
         }
 
         public void SendParcelsToMainBranch(short branchId)
         {
-            context.Database.ExecuteSqlCommand("SendParcelsToMainBranch @p0", branchId);
+            dbContext.Database.ExecuteSqlCommand("SendParcelsToMainBranch @p0", branchId);
+        }
+
+        public void RegisterParcel(ClientParcelViewModel parcelViewModel)
+        {
+            decimal volume = parcelViewModel.Width * parcelViewModel.Height * parcelViewModel.Depth;
+            int senderBranchCode = int.Parse(new string(parcelViewModel.SenderPostalCode.Take(2).ToArray()));
+            int receiverBranchCode = int.Parse(new string(parcelViewModel.ReceiverPostalCode.Take(2).ToArray()));
+
+            short lastBranchId = dbContext.Branches.First(x => x.BranchCode == senderBranchCode).BranchId;
+            short targetBranchId = dbContext.Branches.First(x => x.BranchCode == receiverBranchCode).BranchId;
+
+            Parcel parcel = new Parcel
+            {
+                SenderStreetName = parcelViewModel.SenderStreetName,
+                SenderBlockNumber = parcelViewModel.SenderBlockNumber,
+                SenderFlatNumber = parcelViewModel.SenderFlatNumber,
+                SenderPostalCode = parcelViewModel.SenderPostalCode,
+                SenderCity = parcelViewModel.SenderCity,
+                ReceiverStreetName = parcelViewModel.ReceiverStreetName,
+                ReceiverBlockNumber = parcelViewModel.ReceiverBlockNumber,
+                ReceiverFlatNumber = parcelViewModel.ReceiverFlatNumber,
+                ReceiverPostalCode = parcelViewModel.ReceiverPostalCode,
+                ReceiverCity = parcelViewModel.ReceiverCity,
+                Weight = parcelViewModel.Weight,
+                Volume = volume,
+                IsSent = true,
+                LastBranchId = lastBranchId,
+                TargetBranchId = targetBranchId,
+                VisibleForCourier = false,
+                DeliveryAttempts = 0,
+                ParcelStatusId = 1 // "status: przesyłka odebrana od nadawcy"
+            };
+
+            dbContext.Add(parcel);
+            dbContext.SaveChanges();
+            dbContext.Database.ExecuteSqlCommand("AssignParcelToCourier @p0, @p1", parcel.TargetBranchId, parcel.ParcelId);
         }
     }
 }
