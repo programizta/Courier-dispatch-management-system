@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Dispatch_system.Data;
+﻿using Dispatch_system.Data;
 using Dispatch_system.Models;
 using Dispatch_system.Services;
 using Dispatch_system.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -109,7 +106,7 @@ namespace Dispatch_system.Controllers
                 {
                     int? personId = accountService.GetPersonId(model.Email);
                     ViewData["PersonId"] = personId;
-                    return RedirectToAction("index", "home", ViewData["PersonId"]);
+                    return RedirectToAction("Index", "Home", ViewData["PersonId"]);
                 }
 
                 ModelState.AddModelError(string.Empty, "Podano błędny adres e-mail lub hasło");
@@ -122,7 +119,7 @@ namespace Dispatch_system.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("index", "home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

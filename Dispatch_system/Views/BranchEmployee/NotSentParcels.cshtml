@@ -13,7 +13,7 @@
             <th scope="col">Id przesyłki</th>
             <th scope="col">Adres nadawcy</th>
             <th scope="col">Adres odbiorcy</th>
-            <th scope="col" class="text-right">Akcje</th>
+            <th scope="col" class="text-center">Akcje</th>
         </tr>
     </thead>
     <tbody>
@@ -23,10 +23,12 @@
                 <td>@parcel.ParcelId</td>
                 <td>ul.@parcel.SenderStreetName @parcel.SenderBlockNumber/@parcel.SenderFlatNumber, @parcel.SenderPostalCode @parcel.SenderCity</td>
                 <td>ul.@parcel.ReceiverStreetName @parcel.ReceiverBlockNumber/@parcel.ReceiverFlatNumber, @parcel.ReceiverPostalCode @parcel.ReceiverCity</td>
-                <td class="text-right">
-                    <form asp-action="CompleteData" asp-controller="BranchEmployee" asp-route-id="@parcel.ParcelId" method="get">
-                        <button class="btn btn-primary" type="submit">Uzupełnij dane</button>
-                    </form>
+                <td class="text-right" style="width: 24%;">
+                    <div style="float:left;">
+                        <form asp-action="CompleteData" asp-controller="BranchEmployee" asp-route-id="@parcel.ParcelId" method="get">
+                            <button class="btn btn-primary" type="submit">Uzupełnij dane</button>
+                        </form>
+                    </div>
                     <form asp-action="DeleteParcel" asp-controller="BranchEmployee" asp-route-id="@parcel.ParcelId" method="post">
                         <button class="btn btn-danger" type="submit">Usuń zgłoszenie</button>
                     </form>

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Dispatch_system.Data;
+﻿using Dispatch_system.Data;
 using Dispatch_system.Models;
 using Dispatch_system.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Dispatch_system.Services
 {

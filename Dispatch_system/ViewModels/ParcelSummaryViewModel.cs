@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Dispatch_system.ViewModels
+﻿namespace Dispatch_system.ViewModels
 {
     public class ParcelSummaryViewModel
     {

@@ -102,7 +102,7 @@
                 {
                     var person = ViewData["PersonId"] as int?;
 
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" style="margin: 0 -67px;">
                         <li class="nav-item dropdown">
                             <a class="navbar-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button">
                                 @User.Identity.Name
@@ -122,7 +122,7 @@
 
                 @if (!signInManager.IsSignedIn(User))
                 {
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" style="margin: 0 -67px;">
                         <li><a asp-controller="Account" asp-action="Register" class="navbar-link"><span class="glyphicon glyphicon-user"></span> Rejestracja</a></li>
                         <li><a asp-controller="Account" asp-action="Login" class="navbar-link"><span class="glyphicon glyphicon-log-in"></span> Logowanie</a></li>
                     </ul>
@@ -134,10 +134,12 @@
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
-        <div class="row top-panel" style="margin-right: 10px">
-            Mistrzowie dostawy
+        <div class="container">
+            <div class="row top-panel">
+                Mistrzowie dostawy
+            </div>
+            @RenderBody()
         </div>
-        @RenderBody()
         <hr />
         <footer>
             <p>&copy; System kurierski</p>

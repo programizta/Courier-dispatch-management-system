@@ -7,6 +7,8 @@
 <h1>Pracownicy</h1>
 <h5>Lista pracowników w firmie wraz z ich zajmowanymi stanowiskami:</h5>
 
+<br />
+
 <table class="table table-hover table-striped">
     <thead class="thread-dark">
         <tr>
@@ -15,7 +17,8 @@
             <th scope="col">Nazwisko</th>
             <th scope="col">Numer telefonu</th>
             <th scope="col">Stanowisko</th>
-            <th scope="col" class="text-right">Akcje</th>
+            <th scole="col">Oddział</th>
+            <th scope="col" class="text-center">Akcje</th>
         </tr>
     </thead>
     <tbody>
@@ -27,16 +30,19 @@
                 <td>@employee.FirstName</td>
                 <td>@employee.LastName</td>
                 <td>@employee.PhoneNumber</td>
-                <td>
-                    @employee.Role
-                </td>
+                <td>@employee.Role</td>
+                <td>@employee.BranchName</td>
                 <td class="text-right">
-                    <form asp-action="DeleteEmployee" asp-controller="Manager" asp-route-id="@employee.PersonId" method="post">
-                        <button class="btn btn-danger" type="submit">Usuń</button>
-                    </form>
-                    <form asp-action="EditEmployee" asp-controller="Manager" asp-route-id="@employee.EmployeeId" method="get">
-                        <button class="btn btn-primary" type="submit">Edycja</button>
-                    </form>
+                    <div style="float: left;">
+                        <form asp-action="DeleteEmployee" asp-controller="Manager" asp-route-id="@employee.PersonId" method="post">
+                            <button class="btn btn-danger" type="submit">Usuń</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form asp-action="EditEmployee" asp-controller="Manager" asp-route-id="@employee.EmployeeId" method="get">
+                            <button class="btn btn-primary" type="submit">Edycja</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         }

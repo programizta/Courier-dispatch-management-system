@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Dispatch_system.Data;
+using Dispatch_system.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Dispatch_system.Data;
-using Dispatch_system.ViewModels;
 
 namespace Dispatch_system.Services
 {

@@ -1,5 +1,3 @@
-using System;
-
 namespace Dispatch_system.Models
 {
     public class ErrorViewModel

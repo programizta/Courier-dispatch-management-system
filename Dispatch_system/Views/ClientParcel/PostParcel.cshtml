@@ -3,82 +3,79 @@
 <h1>Nadaj przesyłkę online</h1>
 <h5>Wprowadź dane przesyłki</h5>
 
-<div class="container">
+<div class="row">
 
-    <div class="row">
-
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <div id="ui">
-                <form enctype="multipart/form-data" asp-controller="ClientParcel" asp-action="PostParcel" class="form-group">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <label>Nazwa ulicy nadawcy:</label>
-                            <input asp-for="SenderStreetName" class="form-control" />
-                        </div>
-
-                        <div class="col-lg-6">
-                            <label>Numer bloku nadawcy:</label>
-                            <input asp-for="SenderBlockNumber" class="form-control" />
-                        </div>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+        <div id="ui">
+            <form enctype="multipart/form-data" asp-controller="ClientParcel" asp-action="PostParcel" class="form-group">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label>Nazwa ulicy nadawcy:</label>
+                        <input asp-for="SenderStreetName" class="form-control" />
                     </div>
 
-                    <label>Numer mieszkania nadawcy:</label>
-                    <input asp-for="SenderFlatNumber" class="form-control" />
+                    <div class="col-lg-6">
+                        <label>Numer bloku nadawcy:</label>
+                        <input asp-for="SenderBlockNumber" class="form-control" />
+                    </div>
+                </div>
 
-                    <label>Kod pocztowy nadawcy:</label>
-                    <input asp-for="SenderPostalCode" class="form-control" />
+                <label>Numer mieszkania nadawcy:</label>
+                <input asp-for="SenderFlatNumber" class="form-control" />
 
-                    <label>Miasto nadawcy:</label>
-                    <input asp-for="SenderCity" class="form-control" />
+                <label>Kod pocztowy nadawcy:</label>
+                <input asp-for="SenderPostalCode" class="form-control" />
 
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <label>Nazwa ulicy odbiorcy:</label>
-                            <input asp-for="ReceiverStreetName" class="form-control" />
-                        </div>
+                <label>Miasto nadawcy:</label>
+                <input asp-for="SenderCity" class="form-control" />
 
-                        <div class="col-lg-6">
-                            <label>Numer bloku odbiorcy:</label>
-                            <input asp-for="ReceiverBlockNumber" class="form-control" />
-                        </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label>Nazwa ulicy odbiorcy:</label>
+                        <input asp-for="ReceiverStreetName" class="form-control" />
                     </div>
 
-                    <label>Numer mieszkania odbiorcy:</label>
-                    <input asp-for="ReceiverFlatNumber" class="form-control" />
+                    <div class="col-lg-6">
+                        <label>Numer bloku odbiorcy:</label>
+                        <input asp-for="ReceiverBlockNumber" class="form-control" />
+                    </div>
+                </div>
 
-                    <label>Kod pocztowy odbiorcy:</label>
-                    <input asp-for="ReceiverPostalCode" class="form-control" />
+                <label>Numer mieszkania odbiorcy:</label>
+                <input asp-for="ReceiverFlatNumber" class="form-control" />
 
-                    <label>Miasto odbiorcy:</label>
-                    <input asp-for="ReceiverCity" class="form-control" />
+                <label>Kod pocztowy odbiorcy:</label>
+                <input asp-for="ReceiverPostalCode" class="form-control" />
 
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <label>Wysokość paczki (w cm):</label>
-                            <input asp-for="Height" class="form-control" />
-                        </div>
+                <label>Miasto odbiorcy:</label>
+                <input asp-for="ReceiverCity" class="form-control" />
 
-                        <div class="col-lg-4">
-                            <label>Szerokość paczki (w cm):</label>
-                            <input asp-for="Width" class="form-control" />
-                        </div>
-
-                        <div class="col-lg-4">
-                            <label>Głębokość paczki (w cm):</label>
-                            <input asp-for="Depth" class="form-control" />
-                        </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label>Wysokość paczki (w cm):</label>
+                        <input asp-for="Height" class="form-control" />
                     </div>
 
-                    <div asp-validation-summary="All" class="text-danger"></div>
-
-                    <div class="col-lg-pull-6">
-                        <br />
-                        <button type="submit" class="btn btn-primary btn-block">Nadaj przesyłkę online</button>
-                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger btn-block">Anuluj i wróć do strony głównej</a>
+                    <div class="col-lg-4">
+                        <label>Szerokość paczki (w cm):</label>
+                        <input asp-for="Width" class="form-control" />
                     </div>
-                </form>
-            </div>
+
+                    <div class="col-lg-4">
+                        <label>Głębokość paczki (w cm):</label>
+                        <input asp-for="Depth" class="form-control" />
+                    </div>
+                </div>
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="col-lg-pull-6">
+                    <br />
+                    <button type="submit" class="btn btn-primary btn-block">Nadaj przesyłkę online</button>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-danger btn-block">Anuluj i wróć do strony głównej</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
