@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dispatch_system.Data;
 using Dispatch_system.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dispatch_system.Services
 {
@@ -22,7 +23,7 @@ namespace Dispatch_system.Services
             var parcel = dbContext.Parcels.FirstOrDefault(x => x.ParcelId == parcelId);
 
             parcel.DeliveryAttempts++;
-            parcel.ParcelStatusId = 8; // Nieudana próba doręczenia
+            parcel.ParcelStatusId = 8; // status: nieudana próba doręczenia
 
             dbContext.Parcels.Update(parcel);
             dbContext.SaveChanges();
@@ -33,7 +34,7 @@ namespace Dispatch_system.Services
             var parcel = dbContext.Parcels.FirstOrDefault(x => x.ParcelId == parcelId);
 
             parcel.DeliveryAttempts++;
-            parcel.ParcelStatusId = 9; // Przesyłka dostarczona
+            parcel.ParcelStatusId = 9; // status: przesyłka dostarczona
             dbContext.Parcels.Update(parcel);
             dbContext.SaveChanges();
         }
@@ -43,7 +44,8 @@ namespace Dispatch_system.Services
             var parcelsToDeliever = (from parcel in dbContext.Parcels
                                      where parcel.CourierId == courierId
                                      && parcel.DeliveryAttempts < 2
-                                     && parcel.ParcelStatusId == 2
+                                     && parcel.ParcelStatusId == 3 // status: przesyłka wydana kurierowi
+                                     && parcel.VisibleForCourier == true
                                      select new ParcelViewModel
                                      {
                                          ParcelId = parcel.ParcelId,
@@ -62,7 +64,8 @@ namespace Dispatch_system.Services
             var parcelsToReturn = (from parcel in dbContext.Parcels
                                    where parcel.CourierId == courierId
                                    && parcel.DeliveryAttempts == 2
-                                   && parcel.ParcelStatusId == 2
+                                   && parcel.ParcelStatusId == 8 // status: nieudana próba doręczenia
+                                   && parcel.VisibleForCourier == true
                                    select new ParcelViewModel
                                    {
                                        ParcelId = parcel.ParcelId,
@@ -74,6 +77,15 @@ namespace Dispatch_system.Services
                                    }).ToList();
 
             return parcelsToReturn;
+        }
+
+        public void ReturnParcelsToBranch(int courierId)
+        {
+            short branchId = dbContext.Employees
+                                .First(x => x.EmployeeId == courierId)
+                                .BranchId;
+
+            dbContext.Database.ExecuteSqlCommand("ReturnParcelsToBranch @p0, @p1", courierId, branchId);
         }
     }
 }

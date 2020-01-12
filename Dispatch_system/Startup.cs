@@ -40,6 +40,10 @@ namespace Dispatch_system
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            // wczesne zarejestrowanie tego serwisu pozwoli mi na dostęp
+            // do właściwości użytkowników, np. Id
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             // wywołanie jakiejkowiek metody z interfejsu IEmployeeService
             // wyzwala metodę z klasy SQLEmployeeService
             services.AddScoped<IEmployeeSerivce, SQLEmployeeService>();

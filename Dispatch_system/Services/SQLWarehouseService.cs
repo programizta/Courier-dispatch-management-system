@@ -59,6 +59,11 @@ namespace Dispatch_system.Services
             dbContext.Database.ExecuteSqlCommand("TransferParcelsToCourier @p0", courierId);
         }
 
+        /// <summary>
+        /// Metoda zwracająca listę kurierów, którzy mają zgodny id placówki z id placówki magazyniera
+        /// </summary>
+        /// <param name="branchId"></param>
+        /// <returns></returns>
         public List<EmployeeViewModel> CouriersInBranch(int branchId)
         {
             var couriersInBranch = (from employee in dbContext.Employees
@@ -75,12 +80,17 @@ namespace Dispatch_system.Services
             return couriersInBranch;
         }
 
+        /// <summary>
+        /// Metoda zwracająca listę przesyłek nowo wysłanych z określonego oddziału do węzła
+        /// </summary>
+        /// <param name="branchId"></param>
+        /// <returns></returns>
         public List<ParcelViewModel> NewParcelsToRegister(int branchId)
         {
             var newParcels = (from parcel in dbContext.Parcels
                               where parcel.TargetBranchId == branchId
                               && parcel.VisibleForCourier == false
-                              && parcel.ParcelStatusId == 10 // przesyłka w drodze do węzła
+                              && parcel.ParcelStatusId == 10 // status: przesyłka w drodze do węzła
                               select new ParcelViewModel
                               {
                                   ParcelId = parcel.ParcelId,

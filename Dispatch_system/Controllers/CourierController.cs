@@ -1,10 +1,12 @@
 ﻿using Dispatch_system.Data;
 using Dispatch_system.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Dispatch_system.Controllers
@@ -12,42 +14,81 @@ namespace Dispatch_system.Controllers
     public class CourierController : Controller
     {
         private readonly ICourierService courierService;
-        private readonly UserManager<IdentityUser> userManager;
         private readonly ApplicationDbContext dbContext;
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly int courierId;
 
         public CourierController(ICourierService courierService,
-            UserManager<IdentityUser> userManager,
-            ApplicationDbContext dbContext)
+            ApplicationDbContext dbContext,
+            IHttpContextAccessor httpContextAccessor)
         {
             this.courierService = courierService;
-            this.userManager = userManager;
             this.dbContext = dbContext;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ParcelsToDeliever()
+        /// <summary>
+        /// Metoda zwracająca id kuriera
+        /// </summary>
+        /// <returns></returns>
+        private int GetCourierId()
         {
-            var user = await userManager.GetUserAsync(User);
+            string userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var courierIdModel = (from person in dbContext.People
-                                  join employee in dbContext.Employees on person.PersonId equals employee.PersonId
-                                  where person.UserId == user.Id
-                                  select new
-                                  {
-                                      employee.EmployeeId
-                                  }).FirstOrDefault();
+            return (from person in dbContext.People
+                    join employee in dbContext.Employees on person.PersonId equals employee.PersonId
+                    where person.UserId == userId
+                    select new
+                    {
+                        employee.EmployeeId
+                    }).First().EmployeeId;
+        }
 
-            int courierId = courierIdModel.EmployeeId;
+        /// <summary>
+        /// Akcja odpowiedzialna za zwrócenie widoku z listą wydanych kurierowi przesyłek
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult ParcelsToDeliever()
+        {
             var parcelsToDeliever = courierService.ParcelsToDeliever(courierId);
 
             return View(parcelsToDeliever);
         }
 
+        /// <summary>
+        /// Akcja zmieniająca status przesyłki na "dostarczona" i informująca kuriera o zmianie statusu
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Delivered(int id)
         {
             courierService.ParcelDelivered(id);
+            return RedirectToAction("DeliveredSuccess");
+        }
+
+        [HttpPost]
+        public IActionResult FailedToDeliever(int id)
+        {
+            courierService.FailedToDeliever(id);
             return RedirectToAction("ParcelsToDeliever");
+        }
+
+        [HttpGet]
+        public IActionResult ToReturn()
+        {
+            var parcelsToReturn = courierService.ParcelsToReturn(courierId);
+
+            return View(parcelsToReturn);
+        }
+
+        [HttpPost]
+        public IActionResult ReturnParcels()
+        {
+            courierService.ReturnParcelsToBranch(courierId);
+
+            return RedirectToAction("Returned");
         }
     }
 }

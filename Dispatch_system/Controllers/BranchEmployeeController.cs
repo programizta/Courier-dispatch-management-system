@@ -2,6 +2,7 @@
 using Dispatch_system.Services;
 using Dispatch_system.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,34 +16,38 @@ namespace Dispatch_system.Controllers
     public class BranchEmployeeController : Controller
     {
         private readonly IBranchParcelService parcelService;
-        private readonly UserManager<IdentityUser> userManager;
         private readonly ApplicationDbContext context;
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly short branchId;
 
         public BranchEmployeeController(IBranchParcelService parcelService,
-            UserManager<IdentityUser> userManager,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IHttpContextAccessor httpContextAccessor)
         {
             this.parcelService = parcelService;
-            this.userManager = userManager;
             this.context = context;
+            this.httpContextAccessor = httpContextAccessor;
+
+            branchId = GetBranchId();
+        }
+
+        private short GetBranchId()
+        {
+            string userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            return (from person in context.People
+                    join employee in context.Employees on person.PersonId equals employee.PersonId
+                    where person.UserId == userId
+                    select new
+                    {
+                        employee.BranchId
+                    }).First().BranchId;
         }
 
         [HttpGet]
-        //[Authorize]
-        public async Task<IActionResult> NotSentParcels()
+        [Authorize]
+        public IActionResult NotSentParcels()
         {
-            var user = await userManager.GetUserAsync(User);
-
-            var branchIdModel = (from person in context.People
-                                 join employee in context.Employees on person.PersonId equals employee.PersonId
-                                 where person.UserId == user.Id
-                                 select new
-                                 {
-                                     employee.BranchId
-                                 });
-
-            short branchId = branchIdModel.First().BranchId;
-
             var notSentParcels = parcelService.NotSentParcels(branchId);
 
             return View(notSentParcels);
@@ -100,6 +105,54 @@ namespace Dispatch_system.Controllers
         public IActionResult ParcelDelivered()
         {
             return View();
+        }
+
+        /// <summary>
+        /// zaimplementuj widok!
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult ParcelsToSendInWarehouse()
+        {
+            var parcelsToSend = parcelService.ParcelsToSend(branchId);
+
+            return View(parcelsToSend);
+        }
+
+        /// <summary>
+        /// zaimplementuj widok!
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult SendParcelsToMainBranch()
+        {
+            parcelService.SendParcelsToMainBranch(branchId);
+
+            return RedirectToAction("Sent");
+        }
+
+        /// <summary>
+        /// zaimplementuj widok!
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult ParcelsInBranchWarehouse()
+        {
+            var parcels = parcelService.ParcelsInBranchWarehouse(branchId);
+
+            return View(parcels);
+        }
+
+        /// <summary>
+        /// zaimplementuj widok!
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult MarkAsDelivered(int parcelId)
+        {
+            parcelService.MarkAsDelivered(parcelId);
+            return RedirectToAction("ParcelDelivered"); // zaimplementuj widok
         }
     }
 }

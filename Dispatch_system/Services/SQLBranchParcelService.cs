@@ -154,5 +154,41 @@ namespace Dispatch_system.Services
             dbContext.SaveChanges();
             dbContext.Database.ExecuteSqlCommand("AssignParcelToCourier @p0, @p1", parcel.TargetBranchId, parcel.ParcelId);
         }
+
+        public List<ParcelViewModel> ParcelsInBranchWarehouse(short branchId)
+        {
+            var parcelsInWarehouse = (from parcel in dbContext.Parcels
+                                      where parcel.TargetBranchId == branchId
+                                      select new ParcelViewModel
+                                      {
+                                          ParcelId = parcel.ParcelId,
+                                          ReceiverStreetName = parcel.ReceiverStreetName,
+                                          ReceiverBlockNumber = parcel.ReceiverBlockNumber,
+                                          ReceiverFlatNumber = parcel.ReceiverFlatNumber,
+                                          ReceiverPostalCode = parcel.ReceiverPostalCode,
+                                          ReceiverCity = parcel.ReceiverCity
+                                      }).ToList();
+
+            return parcelsInWarehouse;
+        }
+
+        public List<ParcelViewModel> ParcelsToSend(short branchId)
+        {
+            var parcelsToSend = (from parcel in dbContext.Parcels
+                                 where parcel.LastBranchId == branchId
+                                 && parcel.ParcelStatusId == 1 // status: przesyłka odebrana od nadawcy
+                                 && parcel.IsSent == true
+                                 select new ParcelViewModel
+                                 {
+                                     ParcelId = parcel.ParcelId,
+                                     ReceiverStreetName = parcel.ReceiverStreetName,
+                                     ReceiverBlockNumber = parcel.ReceiverBlockNumber,
+                                     ReceiverFlatNumber = parcel.ReceiverFlatNumber,
+                                     ReceiverPostalCode = parcel.ReceiverPostalCode,
+                                     ReceiverCity = parcel.ReceiverCity
+                                 }).ToList();
+
+            return parcelsToSend;
+        }
     }
 }
