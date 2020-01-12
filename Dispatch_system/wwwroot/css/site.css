@@ -150,3 +150,11 @@ a[aria-expanded="true"] {
         width: 250px;
         text-align: center;
     }
+
+.centerButton {
+    text-align: center;
+}
+
+.rightButton {
+    text-align: right;
+}

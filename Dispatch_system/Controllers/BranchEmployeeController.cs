@@ -43,7 +43,7 @@ namespace Dispatch_system.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult NotSentParcels()
+        public IActionResult OnlineOrders()
         {
             var notSentParcels = parcelService.NotSentParcels(branchId);
 
@@ -91,6 +91,12 @@ namespace Dispatch_system.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult ParcelDelivered()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult ParcelDelivered(int parcelId)
         {
@@ -98,18 +104,12 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("ParcelDelivered");
         }
 
-        [HttpGet]
-        public IActionResult ParcelDelivered()
-        {
-            return View();
-        }
-
         /// <summary>
         /// zaimplementuj widok!
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult ParcelsToSendInWarehouse()
+        public IActionResult ParcelsToSend()
         {
             var parcelsToSend = parcelService.ParcelsToSend(branchId);
 

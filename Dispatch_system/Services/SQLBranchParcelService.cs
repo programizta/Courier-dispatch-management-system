@@ -179,6 +179,11 @@ namespace Dispatch_system.Services
                                  select new ParcelViewModel
                                  {
                                      ParcelId = parcel.ParcelId,
+                                     SenderStreetName = parcel.SenderStreetName,
+                                     SenderBlockNumber = parcel.SenderBlockNumber,
+                                     SenderFlatNumber = parcel.SenderFlatNumber,
+                                     SenderPostalCode = parcel.SenderPostalCode,
+                                     SenderCity = parcel.SenderCity,
                                      ReceiverStreetName = parcel.ReceiverStreetName,
                                      ReceiverBlockNumber = parcel.ReceiverBlockNumber,
                                      ReceiverFlatNumber = parcel.ReceiverFlatNumber,
