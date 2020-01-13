@@ -5,6 +5,6 @@ namespace Dispatch_system.Services
     public interface IClientParcelService
     {
         void PostOnline(ClientParcelViewModel clientParcelViewModel);
-        ClientParcelViewModel CheckStatus(int parcelId);
+        ParcelStatusViewModel CheckStatus(int parcelId);
     }
 }

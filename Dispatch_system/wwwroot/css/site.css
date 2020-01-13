@@ -81,10 +81,6 @@ body {
     height: 300px;
 }
 
-a[aria-expanded="true"] {
-    color: black !important;
-}
-
 .postParcel {
     margin-left: 30px;
     background-image: url(../images/courier.jpg);

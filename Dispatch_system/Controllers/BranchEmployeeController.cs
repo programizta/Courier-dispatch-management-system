@@ -104,10 +104,6 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("ParcelDelivered");
         }
 
-        /// <summary>
-        /// zaimplementuj widok!
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public IActionResult ParcelsToSend()
         {
@@ -117,7 +113,7 @@ namespace Dispatch_system.Controllers
         }
 
         /// <summary>
-        /// zaimplementuj widok!
+        /// zaimplementuj
         /// </summary>
         /// <returns></returns>
         [HttpPost]

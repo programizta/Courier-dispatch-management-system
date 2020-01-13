@@ -1,12 +1,43 @@
-﻿@model ClientParcelViewModel
+﻿@model ParcelViewModel
 
-<h3 class="center-block">
+@{
+    ViewBag.Title = "Sprawdzanie statusu przesyłki";
+}
+
+<h1>Status przesyłki</h1>
+
+<br />
+
+<h4>
     Proszę wprowadzić kod przesyłki poniżej w celu sprawdzenia jej statusu:
-</h3>
+</h4>
 
-<form method="post" asp-area="" asp-controller="ClientParcel" asp-action="CheckStatus">
+<br />
+<br />
+<br />
 
-    <input name="parcelId" type="text"/>
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <form method="post" asp-controller="ClientParcel" asp-action="CheckStatus">
+            <div class="form-group">
+                <input asp-for="@Model.ParcelId" type="text" class="form-control" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            </div>
+            <div class="col-lg-4"></div>
+            <button type="submit" class="btn btn-primary" style="width: auto;">Sprawdź status</button>
+        </form>
+    </div>
+</div>
 
-    <button type="submit" class="btn btn-primary">Sprawdź</button>
-</form>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

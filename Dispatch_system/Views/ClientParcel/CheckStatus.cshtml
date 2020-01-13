@@ -1,35 +1,80 @@
-﻿@model ClientParcelViewModel
+﻿@model ParcelStatusViewModel
 
-<h3>Status przesyłki numer @Model.ParcelId</h3>
+@{
+    ViewBag.Title = "Przesyłka " + Model.ParcelId;
+}
+
+<h1>Status przesyłki o numerze: @Model.ParcelId</h1>
 
 <br />
 <br />
 
-<div class="container">
-    <h3>Dane nadawcy przesyłki:</h3>
+<div class="row" style="margin-left: auto;">
 
     <div class="row">
-        <div>
+
+        <div class="col-lg-6">
+
+            <h3>Dane nadawcy przesyłki:</h3>
+            <br />
             <label>Adres nadawcy:</label>
-            ul.@Model.SenderStreetName @Model.SenderBlockNumber/@Model.SenderStreetName, @Model.SenderPostalCode @Model.SenderCity
+            ul.@Model.SenderStreetName @Model.SenderBlockNumber mieszkanie @Model.SenderFlatNumber
+            <br />
+            <label>Kod pocztowy i miasto:</label>
+            @Model.SenderPostalCode @Model.SenderCity
         </div>
-    </div>
 
-    <div class="row">
-        <div>
+        <div class="col-lg-6">
+
+            <h3>Dane odbiorcy przesyłki:</h3>
+
+            <br />
+
             <label>Adres odbiorcy:</label>
-            ul.@Model.ReceiverStreetName @Model.ReceiverBlockNumber/@Model.ReceiverStreetName, @Model.ReceiverPostalCode @Model.ReceiverCity
+            ul.@Model.ReceiverStreetName @Model.ReceiverBlockNumber mieszkanie @Model.ReceiverFlatNumber
+
+            <br />
+
+            <label>Kod pocztowy i miasto:</label>
+            @Model.ReceiverPostalCode @Model.ReceiverCity
+
         </div>
+
     </div>
 
     <br />
 
-    <div class="row">
-        @if (!Model.IsSent)
-        {
-            <label>Twoja przesyłka nie została jeszcze przez Ciebie zaniesiona do punktu nadawczego. Prosimy się udać z nią do najbliższego punktu w celu dopełnienia formalności.</label>
-        }
+    <div>
+        <h3>Historia statusu przesyłki:</h3>
     </div>
 
+    <table class="table table-hover table-striped">
+        <thead class="thread-dark">
+            <tr>
+                <th scope="col">Data zdarzenia</th>
+                <th scope="col">Nazwa statusu</th>
+                <th scope="col">Oddział</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var historyRow in Model.Histories)
+            {
+                <tr>
+                    <th scope="row">@historyRow.DateTime</th>
+                    <td>@historyRow.StatusName</td>
+                    <td>@historyRow.BranchName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
+</div>
+
+<br />
+
+<div class="row">
+    @if (!Model.IsSent)
+    {
+        <label>Twoja przesyłka nie została jeszcze przez Ciebie zaniesiona do punktu nadawczego. Prosimy się udać z nią do najbliższego punktu w celu dopełnienia formalności.</label>
+    }
 </div>

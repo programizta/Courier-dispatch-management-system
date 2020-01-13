@@ -65,6 +65,7 @@ namespace Dispatch_system.Services
             var parcelList = (from parcel in dbContext.Parcels
                               join status in dbContext.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
                               where parcel.LastBranchId == branchId && parcel.IsSent == false
+                              && parcel.ParcelStatusId == 6 // status: przesyłka nadana on-line
                               select new ClientParcelViewModel
                               {
                                   ParcelId = parcel.ParcelId,

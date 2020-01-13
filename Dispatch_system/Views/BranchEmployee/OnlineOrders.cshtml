@@ -20,8 +20,8 @@
         @foreach (var parcel in Model)
         {
             <tr>
-                <td>@parcel.ParcelId</td>
-                <td>ul.@parcel.SenderStreetName @parcel.SenderBlockNumber/@parcel.SenderFlatNumber, @parcel.SenderPostalCode @parcel.SenderCity</td>
+                <th scope="row">@parcel.ParcelId</th>
+<td>ul.@parcel.SenderStreetName @parcel.SenderBlockNumber/@parcel.SenderFlatNumber, @parcel.SenderPostalCode @parcel.SenderCity</td>
                 <td>ul.@parcel.ReceiverStreetName @parcel.ReceiverBlockNumber/@parcel.ReceiverFlatNumber, @parcel.ReceiverPostalCode @parcel.ReceiverCity</td>
                 <td class="text-right" style="width: 24%;">
                     <div style="float:left;">

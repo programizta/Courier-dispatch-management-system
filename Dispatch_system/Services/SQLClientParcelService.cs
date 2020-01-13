@@ -15,12 +15,11 @@ namespace Dispatch_system.Services
             this.dbContext = dbContext;
         }
 
-        public ClientParcelViewModel CheckStatus(int parcelId)
+        public ParcelStatusViewModel CheckStatus(int parcelId)
         {
             var model = (from parcel in dbContext.Parcels
-                         join status in dbContext.ParcelStatuses on parcel.ParcelStatusId equals status.ParcelStatusId
                          where parcel.ParcelId == parcelId
-                         select new ClientParcelViewModel
+                         select new ParcelStatusViewModel
                          {
                              IsSent = parcel.IsSent,
                              ParcelId = parcel.ParcelId,
@@ -34,12 +33,26 @@ namespace Dispatch_system.Services
                              ReceiverFlatNumber = parcel.ReceiverFlatNumber,
                              ReceiverPostalCode = parcel.ReceiverPostalCode,
                              ReceiverCity = parcel.ReceiverCity,
-                             StatusName = status.StatusName
-                         });
+                         }).FirstOrDefault();
 
-            if (model.FirstOrDefault() != null)
+            var histories = (from history in dbContext.ParcelHistories
+                             where history.ParcelId == parcelId
+                             select new ParcelHistory
+                             {
+                                 ParcelHistoryId = history.ParcelHistoryId,
+                                 DateTime = history.DateTime,
+                                 StatusName = history.StatusName,
+                                 BranchName = history.BranchName
+                             }).ToList().OrderByDescending(x => x.ParcelHistoryId);
+
+            foreach (var history in histories)
             {
-                return model.First();
+                model.Histories.Add(history);
+            }
+
+            if (model != null)
+            {
+                return model;
             }
 
             return null;
