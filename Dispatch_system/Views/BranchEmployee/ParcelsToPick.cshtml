@@ -1,0 +1,35 @@
+﻿@model List<ParcelViewModel>
+
+@{
+    ViewBag.Title = "Przesyłki w magazynie";
+}
+
+
+<h1>Przesyłki w magazynie</h1>
+<h5>Poniżej znajduje się lista aktualnie składowanych przesyłek w magazynie, gotowych do odebrania:</h5>
+
+<table class="table table-hover table-striped">
+    <thead class="thread-dark">
+        <tr>
+            <th scope="col">Id przesyłki</th>
+            <th scope="col">Adres nadawcy</th>
+            <th scope="col">Adres odbiorcy</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var parcelToPick in Model)
+        {
+            <tr>
+                <th scope="row">@parcelToPick.ParcelId</th>
+                <td>ul. @parcelToPick.SenderStreetName @parcelToPick.SenderBlockNumber/@parcelToPick.SenderFlatNumber, @parcelToPick.SenderPostalCode @parcelToPick.SenderCity</td>
+                <td>ul. @parcelToPick.ReceiverStreetName @parcelToPick.ReceiverBlockNumber/@parcelToPick.ReceiverFlatNumber, @parcelToPick.ReceiverPostalCode @parcelToPick.ReceiverCity</td>
+                <td class="text-right">
+                    <form asp-action="MarkAsDelivered" asp-controller="BranchEmployee" asp-route-id="@parcelToPick.ParcelId" method="post">
+                        <button class="btn btn-primary" type="submit">Wybierz przesyłkę z magazynu</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

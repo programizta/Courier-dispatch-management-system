@@ -121,7 +121,7 @@ namespace Dispatch_system.Controllers
         {
             parcelService.SendParcelsToMainBranch(branchId);
 
-            return RedirectToAction("Sent");
+            return RedirectToAction("ParcelsSent");
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Dispatch_system.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult ParcelsInBranchWarehouse()
+        public IActionResult ParcelsToPick()
         {
             var parcels = parcelService.ParcelsInBranchWarehouse(branchId);
 
@@ -142,9 +142,9 @@ namespace Dispatch_system.Controllers
         /// <param name="parcelId"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult MarkAsDelivered(int parcelId)
+        public IActionResult MarkAsDelivered(int id)
         {
-            parcelService.MarkAsDelivered(parcelId);
+            parcelService.MarkAsDelivered(id);
             return RedirectToAction("ParcelDelivered"); // zaimplementuj widok
         }
     }

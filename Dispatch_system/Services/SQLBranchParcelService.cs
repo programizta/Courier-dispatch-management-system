@@ -158,9 +158,15 @@ namespace Dispatch_system.Services
         {
             var parcelsInWarehouse = (from parcel in dbContext.Parcels
                                       where parcel.TargetBranchId == branchId
+                                      && parcel.ParcelStatusId == 4 // status: przesyłka gotowa do odebrania
                                       select new ParcelViewModel
                                       {
                                           ParcelId = parcel.ParcelId,
+                                          SenderStreetName = parcel.SenderStreetName,
+                                          SenderBlockNumber = parcel.SenderBlockNumber,
+                                          SenderFlatNumber = parcel.SenderFlatNumber,
+                                          SenderPostalCode = parcel.SenderPostalCode,
+                                          SenderCity = parcel.SenderCity,
                                           ReceiverStreetName = parcel.ReceiverStreetName,
                                           ReceiverBlockNumber = parcel.ReceiverBlockNumber,
                                           ReceiverFlatNumber = parcel.ReceiverFlatNumber,
