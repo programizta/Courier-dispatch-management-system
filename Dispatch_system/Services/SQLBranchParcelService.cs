@@ -154,7 +154,7 @@ namespace Dispatch_system.Services
             dbContext.Database.ExecuteSqlCommand("AssignParcelToCourier @p0, @p1", parcel.TargetBranchId, parcel.ParcelId);
         }
 
-        public List<ParcelViewModel> ParcelsInBranchWarehouse(short branchId)
+        public List<ParcelViewModel> ParcelsToPick(short branchId)
         {
             var parcelsInWarehouse = (from parcel in dbContext.Parcels
                                       where parcel.TargetBranchId == branchId

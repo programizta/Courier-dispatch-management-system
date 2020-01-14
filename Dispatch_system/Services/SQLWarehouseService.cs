@@ -15,53 +15,56 @@ namespace Dispatch_system.Services
             this.dbContext = dbContext;
         }
 
-        /// <summary>
-        /// Metoda rejestrująca nowe przesyłki, które przybyły do głównego węzła sortowniczego
-        /// </summary>
-        /// <param name="branchId"></param>
         public void AcceptSentParcels(int branchId)
         {
             dbContext.Database.ExecuteSqlCommand("AcceptParcels @p0", branchId);
         }
 
-        /// <summary>
-        /// Metoda zwracająca listę przesyłek przypisanych do kuriera
-        /// </summary>
-        /// <param name="courierId"></param>
-        /// <returns></returns>
-        public List<ParcelViewModel> CourierParcels(int courierId)
+        public CourierParcelsViewModel CourierParcels(int courierId)
         {
-            var sentParcels = (from parcel in dbContext.Parcels
-                               where parcel.ParcelStatusId == 7 // przesyłka w węźle
-                               && parcel.VisibleForCourier == false
-                               && parcel.CourierId == courierId
-                               select new ParcelViewModel
+            var courierData = (from employee in dbContext.Employees
+                               join person in dbContext.People on employee.PersonId equals person.PersonId
+                               where employee.EmployeeId == courierId
+                               select new CourierParcelsViewModel
                                {
-                                   ParcelId = parcel.ParcelId,
-                                   ReceiverStreetName = parcel.ReceiverStreetName,
-                                   ReceiverBlockNumber = parcel.ReceiverBlockNumber,
-                                   ReceiverFlatNumber = parcel.ReceiverFlatNumber,
-                                   ReceiverPostalCode = parcel.ReceiverPostalCode,
-                                   ReceiverCity = parcel.ReceiverCity,
-                               }).ToList();
+                                   CourierId = courierId,
+                                   FirstName = person.FirstName,
+                                   LastName = person.LastName,
+                                   PhoneNumber = person.PhoneNumber
+                               }).First();
 
-            return sentParcels;
+            var courierParcels = (from parcel in dbContext.Parcels
+                                  where parcel.CourierId == courierId
+                                  && parcel.VisibleForCourier == false
+                                  && parcel.ParcelStatusId == 7 // status: przesyłka w węźle
+                                  select new ParcelViewModel
+                                  {
+                                      ParcelId = parcel.ParcelId,
+                                      SenderStreetName = parcel.SenderStreetName,
+                                      SenderBlockNumber = parcel.SenderBlockNumber,
+                                      SenderFlatNumber = parcel.SenderFlatNumber,
+                                      SenderPostalCode = parcel.SenderPostalCode,
+                                      SenderCity = parcel.SenderCity,
+                                      ReceiverStreetName = parcel.ReceiverStreetName,
+                                      ReceiverBlockNumber = parcel.ReceiverBlockNumber,
+                                      ReceiverFlatNumber = parcel.ReceiverFlatNumber,
+                                      ReceiverPostalCode = parcel.ReceiverPostalCode,
+                                      ReceiverCity = parcel.ReceiverCity
+                                  }).ToList();
+
+            foreach (var parcel in courierParcels)
+            {
+                courierData.ListOfParcels.Add(parcel);
+            }
+
+            return courierData;
         }
 
-        /// <summary>
-        /// Metoda odpowiedzialna za wydanie przesyłek kurierowi przez pracownika węzła ekspedycyjno-sortującego
-        /// </summary>
-        /// <param name="courierId"></param>
         public void GiveCourierParcels(int courierId)
         {
             dbContext.Database.ExecuteSqlCommand("TransferParcelsToCourier @p0", courierId);
         }
 
-        /// <summary>
-        /// Metoda zwracająca listę kurierów, którzy mają zgodny id placówki z id placówki magazyniera
-        /// </summary>
-        /// <param name="branchId"></param>
-        /// <returns></returns>
         public List<EmployeeViewModel> CouriersInBranch(int branchId)
         {
             var couriersInBranch = (from employee in dbContext.Employees
@@ -72,17 +75,13 @@ namespace Dispatch_system.Services
                                     {
                                         EmployeeId = employee.EmployeeId,
                                         FirstName = person.FirstName,
-                                        LastName = person.LastName
+                                        LastName = person.LastName,
+                                        PhoneNumber = person.PhoneNumber,
                                     }).ToList();
 
             return couriersInBranch;
         }
 
-        /// <summary>
-        /// Metoda zwracająca listę przesyłek nowo wysłanych z określonego oddziału do węzła
-        /// </summary>
-        /// <param name="branchId"></param>
-        /// <returns></returns>
         public List<ParcelViewModel> NewParcelsToRegister(int branchId)
         {
             var newParcels = (from parcel in dbContext.Parcels
@@ -92,6 +91,11 @@ namespace Dispatch_system.Services
                               select new ParcelViewModel
                               {
                                   ParcelId = parcel.ParcelId,
+                                  SenderStreetName = parcel.SenderStreetName,
+                                  SenderBlockNumber = parcel.SenderBlockNumber,
+                                  SenderFlatNumber = parcel.SenderFlatNumber,
+                                  SenderPostalCode = parcel.SenderPostalCode,
+                                  SenderCity = parcel.SenderCity,
                                   ReceiverStreetName = parcel.ReceiverStreetName,
                                   ReceiverBlockNumber = parcel.ReceiverBlockNumber,
                                   ReceiverFlatNumber = parcel.ReceiverFlatNumber,

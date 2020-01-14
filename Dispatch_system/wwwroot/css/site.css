@@ -154,3 +154,12 @@ body {
 .rightButton {
     text-align: right;
 }
+
+.extendButton {
+    display: block;
+    width: 100%;
+    border: none;
+    padding: 14px 28px;
+    font-size: 16px;
+    text-align: center;
+}

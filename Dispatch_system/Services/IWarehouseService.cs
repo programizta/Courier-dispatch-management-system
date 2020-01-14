@@ -7,7 +7,7 @@ namespace Dispatch_system.Services
     {
         void AcceptSentParcels(int branchId);
         void GiveCourierParcels(int courierId);
-        List<ParcelViewModel> CourierParcels(int courierId);
+        CourierParcelsViewModel CourierParcels(int courierId);
         List<EmployeeViewModel> CouriersInBranch(int branchId);
         List<ParcelViewModel> NewParcelsToRegister(int branchId);
     }

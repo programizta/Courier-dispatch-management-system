@@ -12,6 +12,6 @@ namespace Dispatch_system.Services
         void RegisterParcel(ClientParcelViewModel parcelViewModel); // rejestracja przesyłki w systemie - niejednoznaczność???
         List<ParcelViewModel> ParcelsToSend(short branchId);
         void SendParcelsToMainBranch(short branchId); // wyślij nowo nadane przesyłki do węzła
-        List<ParcelViewModel> ParcelsInBranchWarehouse(short branchId); // przesyłki w magazynie, które nie udało się dostarczyć przez kuriera
+        List<ParcelViewModel> ParcelsToPick(short branchId); // przesyłki w magazynie, które nie udało się dostarczyć przez kuriera
     }
 }

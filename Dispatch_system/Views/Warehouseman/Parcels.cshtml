@@ -1,0 +1,45 @@
+﻿@model CourierParcelsViewModel
+
+@{
+    ViewBag.Title = "Przesyłki kuriera";
+}
+
+<h1>Lista przesyłek</h1>
+
+<div class="col-lg-6" style="margin: 0 0 0 -13px;">
+    <h5>Lista przesyłek do posortowania dla kuriera o identyfikatorze <span style="font-weight: 500;">@Model.CourierId</span></h5>
+</div>
+
+<br />
+
+Imię kuriera: <span style="font-weight: 500;">@Model.FirstName</span>
+<br />
+Nazwisko kuriera: <span style="font-weight: 500;">@Model.LastName</span>
+<br />
+Numer telefonu: <span style="font-weight: 500;">@Model.PhoneNumber</span>
+
+<div class="rightButton">
+    <form asp-action="TransferParcelsToCourier" asp-controller="Warehouseman" asp-route-id="@Model.CourierId">
+        <button class="btn btn-primary" type="submit">Wydaj przesyłki kurierowi</button>
+    </form>
+</div>
+
+<table class="table table-hover table-striped">
+    <thead class="thread-dark">
+        <tr>
+            <th scope="col">Id przesyłki</th>
+            <th scope="col">Adres nadawcy</th>
+            <th scope="col">Adres odbiorcy</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var parcel in Model.ListOfParcels)
+        {
+            <tr>
+                <th scope="row">@parcel.ParcelId</th>
+                <td>ul.@parcel.SenderStreetName @parcel.SenderBlockNumber/@parcel.SenderFlatNumber, @parcel.SenderPostalCode @parcel.SenderCity</td>
+                <td>ul.@parcel.ReceiverStreetName @parcel.ReceiverBlockNumber/@parcel.ReceiverFlatNumber, @parcel.ReceiverPostalCode @parcel.ReceiverCity</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -43,29 +43,59 @@ namespace Dispatch_system.Controllers
                     }).First().BranchId;
         }
 
-        /// <summary>
-        /// Wyświetlenie listy kurierów z określonego oddziału.
-        /// Pracownik węzła może zobaczyć tylko kurierów, którzy mają zgodny
-        /// identyfikator placówki
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public IActionResult Couriers()
-        {
-            var couriers = warehouseService.CouriersInBranch(branchId);
-
-            return View(couriers); // zaimplementuj widok
-        }
-
-        /// <summary>
-        /// Akceptacja przysłanych przesyłek do węzła ekspedycyjno-rozdzielczego
-        /// </summary>
-        /// <returns></returns>
         [HttpPost]
         public IActionResult AcceptSentParcels()
         {
             warehouseService.AcceptSentParcels(branchId);
-            return RedirectToAction("ParcelsAccepted"); // zaimplementuj widok
+            return RedirectToAction("ParcelsAccepted");
+        }
+
+        [HttpGet]
+        public IActionResult ParcelsAccepted()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ParcelsToRegister()
+        {
+            var newParcels = warehouseService.NewParcelsToRegister(branchId);
+
+            return View(newParcels);
+        }
+
+        [HttpGet]
+        public IActionResult Couriers()
+        {
+            var listOfCouriers = warehouseService.CouriersInBranch(branchId);
+
+            return View(listOfCouriers);
+        }
+
+        /// <summary>
+        /// zaimplementuj widok
+        /// </summary>
+        /// <param name="courierId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Parcels(int id)
+        {
+            var listOfParcels = warehouseService.CourierParcels(id);
+
+            return View(listOfParcels);
+        }
+
+        [HttpPost]
+        public IActionResult TransferParcelsToCourier(int id)
+        {
+            warehouseService.GiveCourierParcels(id);
+            return RedirectToAction("Transferred"); // zaimplementuj widok
+        }
+
+        [HttpGet]
+        public IActionResult Transferred()
+        {
+            return View();
         }
     }
 }

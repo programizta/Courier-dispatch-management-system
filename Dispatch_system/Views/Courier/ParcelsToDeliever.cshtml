@@ -12,7 +12,7 @@
         <tr>
             <th scope="col">Id przesyłki</th>
             <th scope="col">Adres odbiorcy</th>
-            <th scope="col" class="text-right">Akcje</th>
+            <th scope="col" class="text-center">Akcje</th>
         </tr>
     </thead>
     <tbody>
@@ -21,13 +21,15 @@
             <tr>
                 <td>@parcel.ParcelId</td>
                 <td>ul.@parcel.ReceiverStreetName @parcel.ReceiverBlockNumber/@parcel.ReceiverFlatNumber, @parcel.ReceiverPostalCode @parcel.ReceiverCity</td>
-                <td class="text-right">
-                    <form asp-action="Delivered" asp-controller="Courier" asp-route-id="@parcel.ParcelId" method="post">
-                        <button class="btn btn-primary" type="submit">Przesyłka dostarczona</button>
-                    </form>
-                    <form asp-action="ParcelsToDeliever" asp-controller="Courier" asp-route-id="@parcel.ParcelId" method="post">
-                        <button class="btn btn-danger" type="submit">Nieudana próba doręczenia</button>
-                    </form>
+                <td class="extendButton" style="text-align: center;">
+                    <div class="extendButton">
+                        <form asp-action="Delivered" asp-controller="Courier" asp-route-id="@parcel.ParcelId" method="post">
+                            <button class="btn btn-primary" type="submit">Przesyłka dostarczona</button>
+                        </form>
+                        <form asp-action="ParcelsToDeliever" asp-controller="Courier" asp-route-id="@parcel.ParcelId" method="post">
+                            <button class="btn btn-danger" type="submit">Nieudana próba doręczenia</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         }

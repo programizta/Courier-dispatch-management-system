@@ -1,0 +1,38 @@
+﻿@model List<EmployeeViewModel>
+
+@{
+    ViewBag.Title = "Kurierzy z oddziału";
+}
+
+<h1>Kurierzy</h1>
+<h5>Poniżej ukazano listę kurierów pracujących w Twoim oddziale:</h5>
+
+<br />
+
+<table class="table table-hover table-striped">
+    <thead class="thread-dark">
+        <tr>
+            <th scope="col">Id kuriera</th>
+            <th scope="col">Imię</th>
+            <th scope="col">Nazwisko</th>
+            <th scope="col">Numer telefonu</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var courier in Model)
+        {
+            <tr>
+                <th scope="row">@courier.EmployeeId</th>
+                <td>@courier.FirstName</td>
+                <td>@courier.LastName</td>
+                <td>@courier.PhoneNumber</td>
+                <td class="text-right">
+                    <form asp-action="Parcels" asp-controller="Warehouseman" asp-route-id="@courier.EmployeeId" method="get">
+                        <button class="btn btn-primary" type="submit">Wyświetl listę przesyłek kuriera</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
