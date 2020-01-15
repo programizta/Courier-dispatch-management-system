@@ -19,17 +19,19 @@
         @foreach (var parcel in Model)
         {
             <tr>
-                <td>@parcel.ParcelId</td>
-                <td>ul.@parcel.ReceiverStreetName @parcel.ReceiverBlockNumber/@parcel.ReceiverFlatNumber, @parcel.ReceiverPostalCode @parcel.ReceiverCity</td>
-                <td class="extendButton" style="text-align: center;">
-                    <div class="extendButton">
+                <td style="padding-top: 15px;">@parcel.ParcelId</td>
+                <td style="padding-top: 15px;">
+                    ul.@parcel.ReceiverStreetName @parcel.ReceiverBlockNumber/@parcel.ReceiverFlatNumber, @parcel.ReceiverPostalCode @parcel.ReceiverCity
+                </td>
+                <td class="extendButton">
+                    <div style="float: left;">
                         <form asp-action="Delivered" asp-controller="Courier" asp-route-id="@parcel.ParcelId" method="post">
-                            <button class="btn btn-primary" type="submit">Przesyłka dostarczona</button>
-                        </form>
-                        <form asp-action="ParcelsToDeliever" asp-controller="Courier" asp-route-id="@parcel.ParcelId" method="post">
-                            <button class="btn btn-danger" type="submit">Nieudana próba doręczenia</button>
+                            <button class="btn btn-success" type="submit">Dostarczona</button>
                         </form>
                     </div>
+                    <form asp-action="ParcelsToDeliever" asp-controller="Courier" asp-route-id="@parcel.ParcelId" method="post">
+                        <button class="btn btn-warning" type="submit">Nieudana próba doręczenia</button>
+                    </form>
                 </td>
             </tr>
         }

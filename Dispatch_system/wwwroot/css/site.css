@@ -142,10 +142,10 @@ body {
         text-decoration: underline;
     }
 
-    .dropdown-menu {
-        width: 250px;
-        text-align: center;
-    }
+.dropdown-menu {
+    width: 250px;
+    text-align: center;
+}
 
 .centerButton {
     text-align: center;
@@ -157,9 +157,14 @@ body {
 
 .extendButton {
     display: block;
-    width: 100%;
-    border: none;
-    padding: 14px 28px;
+    width: 75%;
     font-size: 16px;
     text-align: center;
+}
+
+.verticalAlignment {
+    display: table-cell;
+    height: 100px;
+    padding: 0 0 0 0;
+    vertical-align: middle;
 }
