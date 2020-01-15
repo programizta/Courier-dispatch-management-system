@@ -1,0 +1,37 @@
+﻿@model List<ParcelViewModel>
+
+@{
+    ViewBag.Title = "Przesyłki do zarejestrowania w węźle";
+}
+
+<h1>Lista przesyłek do zwrotu do placówki</h1>
+
+<div class="col-lg-6" style="margin: 0 0 0 -13px;">
+    <h4>Poniżej znajduje się lista przesyłek do zwrócenia do Twojej placówki:</h4>
+</div>
+
+<div class="rightButton">
+    <form asp-action="ReturnParcels" asp-controller="Courier">
+        <button class="btn btn-warning" type="submit">Zwróć przesyłki do placówki</button>
+    </form>
+</div>
+
+<table class="table table-hover table-striped">
+    <thead class="thread-dark">
+        <tr>
+            <th scope="col">Id przesyłki</th>
+            <th scope="col">Adres nadawcy</th>
+            <th scope="col">Adres odbiorcy</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var parcel in Model)
+        {
+            <tr>
+                <th scope="row">@parcel.ParcelId</th>
+                <td>ul.@parcel.SenderStreetName @parcel.SenderBlockNumber/@parcel.SenderFlatNumber, @parcel.SenderPostalCode @parcel.SenderCity</td>
+                <td>ul.@parcel.ReceiverStreetName @parcel.ReceiverBlockNumber/@parcel.ReceiverFlatNumber, @parcel.ReceiverPostalCode @parcel.ReceiverCity</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -61,7 +61,8 @@
                     {
                         // zaimplementuj kontroler i widok
                         <li><a asp-controller="Courier" asp-action="ParcelsToDeliever">Do dostarczenia</a></li>
-                        <li><a asp-controller="Courier" asp-action="ParcelsToReturn">Do zwrotu</a></li>
+                        <li><a asp-controller="Courier" asp-action="ToDelieverNextDay">Do doręczenia kolejnego dnia</a></li>
+                        <li><a asp-controller="Courier" asp-action="ToReturn">Do zwrotu</a></li>
                     }
 
                     @if (!signInManager.IsSignedIn(User) || (signInManager.IsSignedIn(User) && User.IsInRole("Klient")))
@@ -69,7 +70,6 @@
                         // zaimplementuj widok i akcję wyświetlania historii przesyłki
                         <li><a asp-controller="ClientParcel" asp-action="EnterCode">Sprawdź status przesyłki</a></li>
                         <li><a asp-controller="ClientParcel" asp-action="PostParcel">Nadaj przesyłkę online</a></li>
-                        //<li><a asp-controller="ClientParcel" asp-action="Redirect">Przekieruj przesyłkę</a></li>
                         <li class="nav-item dropdown">
                             <a class="navbar-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button">
                                 Informacje
@@ -107,7 +107,7 @@
                             <ul class="dropdown-menu">
                                 <li><a asp-controller="Account" asp-action="PersonalData" , asp-route-id="@person">Dane osobowe</a></li>
                                 <li>
-                                    <form asp-action="logout" asp-controller="account">
+                                    <form asp-action="Logout" asp-controller="Account">
                                         <button class="list-item" type="submit">Wyloguj</button>
                                     </form>
                                 </li>

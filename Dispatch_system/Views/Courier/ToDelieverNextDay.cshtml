@@ -1,0 +1,28 @@
+﻿@model List<ParcelViewModel>
+
+@{
+    ViewBag.Title = "Do dostarczenia";
+}
+
+<h1>Lista przesyłek do dostarczenia następnego dnia roboczego</h1>
+<h5>Lista wydanych przesyłek do dostarczenia, których nie udało się jeszcze dostarczyć:</h5>
+
+<table class="table table-hover table-striped">
+    <thead class="thread-dark">
+        <tr>
+            <th scope="col">Id przesyłki</th>
+            <th scope="col">Adres odbiorcy</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var parcel in Model)
+        {
+            <tr>
+                <th scope="row" style="padding-top: 15px;">@parcel.ParcelId</th>
+                <td style="padding-top: 15px;">
+                    ul.@parcel.ReceiverStreetName @parcel.ReceiverBlockNumber/@parcel.ReceiverFlatNumber, @parcel.ReceiverPostalCode @parcel.ReceiverCity
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

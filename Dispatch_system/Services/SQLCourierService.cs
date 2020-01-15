@@ -84,5 +84,25 @@ namespace Dispatch_system.Services
 
             dbContext.Database.ExecuteSqlCommand("ReturnParcelsToBranch @p0, @p1", courierId, branchId);
         }
+
+        public List<ParcelViewModel> ToDelieverNextDay(int courierId)
+        {
+            var toDeliever = (from parcel in dbContext.Parcels
+                              where parcel.CourierId == courierId
+                              && parcel.DeliveryAttempts < 2
+                              && parcel.VisibleForCourier == true
+                              && parcel.ParcelStatusId == 8 // status: nieudana próba doręczenia
+                              select new ParcelViewModel
+                              {
+                                  ParcelId = parcel.ParcelId,
+                                  ReceiverStreetName = parcel.ReceiverStreetName,
+                                  ReceiverBlockNumber = parcel.ReceiverBlockNumber,
+                                  ReceiverFlatNumber = parcel.ReceiverFlatNumber,
+                                  ReceiverPostalCode = parcel.ReceiverPostalCode,
+                                  ReceiverCity = parcel.ReceiverCity
+                              }).ToList();
+
+            return toDeliever;
+        }
     }
 }

@@ -87,7 +87,15 @@ namespace Dispatch_system.Controllers
         {
             courierService.ReturnParcelsToBranch(courierId);
 
-            return RedirectToAction("Returned");
+            return RedirectToAction("Returned"); // zaimplementuj widok
+        }
+
+        [HttpGet]
+        public IActionResult ToDelieverNextDay()
+        {
+            var parcels = courierService.ToDelieverNextDay(courierId);
+
+            return View(parcels);
         }
     }
 }
