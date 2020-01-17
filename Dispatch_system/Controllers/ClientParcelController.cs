@@ -1,6 +1,7 @@
 ﻿using Dispatch_system.Data;
 using Dispatch_system.Services;
 using Dispatch_system.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -20,12 +21,14 @@ namespace Dispatch_system.Controllers
             this.context = context;
         }
 
+        [Authorize(Roles = "Klient")]
         [HttpGet]
         public IActionResult PostParcel()
         {
             return View();
         }
 
+        [Authorize(Roles = "Klient")]
         [HttpPost]
         public IActionResult PostParcel(ClientParcelViewModel clientParcelViewModel)
         {
@@ -60,6 +63,7 @@ namespace Dispatch_system.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Klient")]
         [HttpGet]
         public IActionResult ThanksPage(ParcelSummaryViewModel model)
         {

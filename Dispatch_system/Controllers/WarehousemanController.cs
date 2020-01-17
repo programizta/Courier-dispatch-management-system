@@ -1,5 +1,6 @@
 ﻿using Dispatch_system.Data;
 using Dispatch_system.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace Dispatch_system.Controllers
                     }).First().BranchId;
         }
 
+        [Authorize(Roles = "Pracownik sortowni")]
         [HttpPost]
         public IActionResult AcceptSentParcels()
         {
@@ -50,12 +52,14 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("ParcelsAccepted");
         }
 
+        [Authorize(Roles = "Pracownik sortowni")]
         [HttpGet]
         public IActionResult ParcelsAccepted()
         {
             return View();
         }
 
+        [Authorize(Roles = "Pracownik sortowni")]
         [HttpGet]
         public IActionResult ParcelsToRegister()
         {
@@ -64,6 +68,7 @@ namespace Dispatch_system.Controllers
             return View(newParcels);
         }
 
+        [Authorize(Roles = "Pracownik sortowni")]
         [HttpGet]
         public IActionResult Couriers()
         {
@@ -72,11 +77,7 @@ namespace Dispatch_system.Controllers
             return View(listOfCouriers);
         }
 
-        /// <summary>
-        /// zaimplementuj widok
-        /// </summary>
-        /// <param name="courierId"></param>
-        /// <returns></returns>
+        [Authorize(Roles = "Pracownik sortowni")]
         [HttpGet]
         public IActionResult Parcels(int id)
         {
@@ -85,6 +86,7 @@ namespace Dispatch_system.Controllers
             return View(listOfParcels);
         }
 
+        [Authorize(Roles = "Pracownik sortowni")]
         [HttpPost]
         public IActionResult TransferParcelsToCourier(int id)
         {
@@ -92,6 +94,7 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("Transferred"); // zaimplementuj widok
         }
 
+        [Authorize(Roles = "Pracownik sortowni")]
         [HttpGet]
         public IActionResult Transferred()
         {

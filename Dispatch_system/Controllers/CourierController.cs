@@ -1,5 +1,6 @@
 ﻿using Dispatch_system.Data;
 using Dispatch_system.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -43,10 +44,7 @@ namespace Dispatch_system.Controllers
                     }).First().EmployeeId;
         }
 
-        /// <summary>
-        /// Akcja odpowiedzialna za zwrócenie widoku z listą wydanych kurierowi przesyłek
-        /// </summary>
-        /// <returns></returns>
+        [Authorize(Roles = "Kurier")]
         [HttpGet]
         public IActionResult ParcelsToDeliever()
         {
@@ -55,11 +53,7 @@ namespace Dispatch_system.Controllers
             return View(parcelsToDeliever);
         }
 
-        /// <summary>
-        /// Akcja zmieniająca status przesyłki na "dostarczona" i informująca kuriera o zmianie statusu
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        [Authorize(Roles = "Kurier")]
         [HttpPost]
         public IActionResult Delivered(int id)
         {
@@ -67,6 +61,7 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("DeliveredSuccess");
         }
 
+        [Authorize(Roles = "Kurier")]
         [HttpPost]
         public IActionResult FailedToDeliever(int id)
         {
@@ -74,6 +69,7 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("ParcelsToDeliever");
         }
 
+        [Authorize(Roles = "Kurier")]
         [HttpGet]
         public IActionResult ToReturn()
         {
@@ -82,6 +78,7 @@ namespace Dispatch_system.Controllers
             return View(parcelsToReturn);
         }
 
+        [Authorize(Roles = "Kurier")]
         [HttpPost]
         public IActionResult ReturnParcels()
         {
@@ -90,6 +87,7 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("Returned"); // zaimplementuj widok
         }
 
+        [Authorize(Roles = "Kurier")]
         [HttpGet]
         public IActionResult ToDelieverNextDay()
         {

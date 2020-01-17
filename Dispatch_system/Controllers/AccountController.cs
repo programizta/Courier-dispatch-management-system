@@ -2,6 +2,7 @@
 using Dispatch_system.Models;
 using Dispatch_system.Services;
 using Dispatch_system.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -115,6 +116,7 @@ namespace Dispatch_system.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -122,6 +124,7 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult PersonalData(int personId)
         {

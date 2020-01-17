@@ -1,6 +1,7 @@
 ﻿using Dispatch_system.Data;
 using Dispatch_system.Models;
 using Dispatch_system.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -23,12 +24,15 @@ namespace Dispatch_system.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize(Roles = "Kierownik")]
+        [HttpGet]
         public IActionResult AllEmployees()
         {
             var employees = employeeRepository.GetAllEmployees();
             return View(employees);
         }
 
+        [Authorize(Roles = "Kierownik")]
         [HttpGet]
         public IActionResult EditEmployee(int id)
         {
@@ -36,12 +40,14 @@ namespace Dispatch_system.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Kierownik")]
         [HttpGet]
         public IActionResult CreateEmployee()
         {
             return View();
         }
 
+        [Authorize(Roles = "Kierownik")]
         [HttpPost]
         public async Task<IActionResult> CreateEmployee(EmployeeViewModel model)
         {
@@ -106,6 +112,7 @@ namespace Dispatch_system.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Kierownik")]
         [HttpPost]
         public IActionResult EditEmployee(EmployeeViewModel employeeChanges)
         {
@@ -119,6 +126,7 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("AllEmployees", "Manager");
         }
 
+        [Authorize(Roles = "Kierownik")]
         [HttpPost]
         public ActionResult DeleteEmployee(int id)
         {

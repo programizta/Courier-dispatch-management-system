@@ -41,8 +41,8 @@ namespace Dispatch_system.Controllers
                     }).First().BranchId;
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpGet]
-        [Authorize]
         public IActionResult OnlineOrders()
         {
             var notSentParcels = parcelService.NotSentParcels(branchId);
@@ -50,6 +50,7 @@ namespace Dispatch_system.Controllers
             return View(notSentParcels);
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpGet]
         public IActionResult CompleteData(int id)
         {
@@ -57,6 +58,7 @@ namespace Dispatch_system.Controllers
             return View(parcel);
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpPost]
         public IActionResult CompleteData(ClientParcelViewModel parcelModel)
         {
@@ -67,12 +69,14 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("Sent");
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpGet]
         public IActionResult RegisterParcel()
         {
             return View();
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpPost]
         public IActionResult RegisterParcel(ClientParcelViewModel parcelViewModel)
         {
@@ -85,18 +89,21 @@ namespace Dispatch_system.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpGet]
         public IActionResult Sent()
         {
             return View();
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpGet]
         public IActionResult ParcelDelivered()
         {
             return View();
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpPost]
         public IActionResult ParcelDelivered(int parcelId)
         {
@@ -104,6 +111,7 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("ParcelDelivered");
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpGet]
         public IActionResult ParcelsToSend()
         {
@@ -112,6 +120,7 @@ namespace Dispatch_system.Controllers
             return View(parcelsToSend);
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpPost]
         public IActionResult SendParcelsToMainBranch()
         {
@@ -120,12 +129,14 @@ namespace Dispatch_system.Controllers
             return RedirectToAction("ParcelsSent");
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpGet]
         public IActionResult ParcelsSent()
         {
             return View();
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpGet]
         public IActionResult ParcelsToPick()
         {
@@ -134,6 +145,7 @@ namespace Dispatch_system.Controllers
             return View(parcels);
         }
 
+        [Authorize(Roles = "Pracownik oddziału")]
         [HttpPost]
         public IActionResult MarkAsDelivered(int id)
         {
