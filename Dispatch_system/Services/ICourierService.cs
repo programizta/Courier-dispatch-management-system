@@ -8,7 +8,7 @@ namespace Dispatch_system.Services
         List<ParcelViewModel> ParcelsToDeliever(int courierId); // przesyłki do dostarczenia
         List<ParcelViewModel> ParcelsToReturn(int courierId); // przesyłki do zwrotu do placówki
         void FailedToDeliever(int parcelId); // nieudana próba doręczenia
-        void ParcelDelivered(int parcelId); // przesyłka do zwrotu
+        void ParcelDelivered(int parcelId); // przesyłka dostarczona
         void ReturnParcelsToBranch(int courierId); // zwróć przesyłki do najbliższego oddziału po dwóch nieudanych próbach doręczenia przez kuriera
         List<ParcelViewModel> ToDelieverNextDay(int courierId); // lista przesyłek do dostarczenia następnego dnia
     }
