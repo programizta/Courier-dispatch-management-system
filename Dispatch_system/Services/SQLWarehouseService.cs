@@ -85,7 +85,7 @@ namespace Dispatch_system.Services
         public List<ParcelViewModel> NewParcelsToRegister(int branchId)
         {
             var newParcels = (from parcel in dbContext.Parcels
-                              where parcel.TargetBranchId == branchId
+                              where parcel.LastBranchId == branchId
                               && parcel.VisibleForCourier == false
                               && parcel.ParcelStatusId == 10 // status: przesyłka w drodze do węzła
                               select new ParcelViewModel

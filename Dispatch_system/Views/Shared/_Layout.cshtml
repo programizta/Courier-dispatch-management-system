@@ -37,6 +37,28 @@
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Kierownik"))
                     {
                         <li><a asp-controller="Manager" asp-action="AllEmployees">Pracownicy</a></li>
+                        <li><a asp-controller="Manager" asp-action="CreateEmployee">Utwórz profil nowego pracownika</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="navbar-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button">
+                                Informacje
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="Home" asp-action="About">O firmie</a></li>
+                                <li><a asp-controller="Home" asp-action="Prices">Oferta</a></li>
+                                <li><a asp-controller="Home" asp-action="About">Adresy</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Pomoc
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="Home" asp-action="About">Kontakt</a></li>
+                            </ul>
+                        </li>
+                        <li><a asp-controller="Home" asp-action="About">O aplikacji</a></li>
                     }
 
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Pracownik sortowni"))
