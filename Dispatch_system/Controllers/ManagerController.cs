@@ -119,7 +119,6 @@ namespace Dispatch_system.Controllers
             if (ModelState.IsValid)
             {
                 var employee = employeeRepository.GetEmployee(employeeChanges.EmployeeId);
-
                 employeeRepository.UpdateEmployee(employeeChanges);
             }
 
@@ -131,7 +130,6 @@ namespace Dispatch_system.Controllers
         public ActionResult DeleteEmployee(int id)
         {
             employeeRepository.DeleteEmployee(id);
-
             return RedirectToAction("AllEmployees", "Manager");
         }
     }
